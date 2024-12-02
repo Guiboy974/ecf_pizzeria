@@ -8,5 +8,6 @@
         "Oeufs",
         "Parmesan"
     ],
-    "prix": 11
+    "prix": 11,
+    "images": "./images/carbo.jpg"
 }

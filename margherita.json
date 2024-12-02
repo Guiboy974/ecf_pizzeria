@@ -8,5 +8,6 @@
         "Huile d'olive",
         "Sel"
     ],
-    "prix": 9
+    "prix": 9,
+    "images": "./images/montagnard.jpg"
 }

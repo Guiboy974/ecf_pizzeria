@@ -8,5 +8,6 @@
         "Gorgonzolla",
         "Camembert"
     ],
-    "prix": 11
+    "prix": 11,
+    "image": "./images/4fromages.jpg"
 }
