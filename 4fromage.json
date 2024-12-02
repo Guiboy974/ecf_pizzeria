@@ -1,0 +1,12 @@
+{
+    "nom": "4 fromages",
+    "base": "tomate",
+    "ingredients": [
+        "Tomates fraîches",
+        "Mozzarella",
+        "Chèvre",
+        "Gorgonzolla",
+        "Camembert"
+    ],
+    "prix": 11
+}

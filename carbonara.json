@@ -1,0 +1,12 @@
+{
+    "nom": "Carbonara",
+    "base": "crème",
+    "ingredients": [
+        "Crème fraîches",
+        "Mozzarella",
+        "Lardons",
+        "Oeufs",
+        "Parmesan"
+    ],
+    "prix": 11
+}

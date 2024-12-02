@@ -1,0 +1,11 @@
+{
+    "nom": "Di Jo",
+    "base": "tomate",
+    "ingredients": [
+        "Tomates fraîches",
+        "Mozzarella",
+        "Chorizo",
+        "Basilic"
+    ],
+    "prix": 11
+}

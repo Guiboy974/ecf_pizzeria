@@ -1,0 +1,11 @@
+{
+    "nom": "Reine",
+    "base": "tomate",
+    "ingredients": [
+        "Tomates fraîches",
+        "Mozzarella",
+        "Champignons",
+        "Jambon"
+    ],
+    "prix": 10
+}

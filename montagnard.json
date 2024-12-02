@@ -1,0 +1,12 @@
+{
+    "nom": "Montagnard",
+    "base": "crème",
+    "ingredients": [
+        "Crème fraîches",
+        "Mozzarella",
+        "Raclette",
+        "Pommes de terres",
+        "Lardons"
+    ],
+    "prix": 12
+}
