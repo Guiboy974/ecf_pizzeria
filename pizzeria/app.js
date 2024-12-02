@@ -1,7 +1,7 @@
 "use strict"
 
 const listPizza = document.getElementById("list-pizza");
-const filtre    = document.getElementById("select-filtre")
+const filtre = document.getElementById("select-filtre")
 
 // recupère les json des pizzas
 async function recuperePizza() {
@@ -19,7 +19,24 @@ async function recuperePizza() {
             listJson.map(res => res.json()),
         );
         console.log(data)
-        displayPizza(data)
+
+        // filtre les pizzas
+        function filtrerPizza(event) {
+            listPizza.innerHTML = "";
+            for (let i = 0; i < data.length; i++) {
+
+                if (event.target.value == 1 && data[i].base === "tomate") {
+                    displayPizza(data)                  
+                }
+
+                if (event.target.value == 2 && data[i].base === "crème") {
+                    displayPizza(data);
+                }
+                displayPizza(data);
+            }
+        }
+        // displayPizza(data);
+        filtre.addEventListener("change", filtrerPizza);
 
     } catch (error) {
         console.log(error);
@@ -28,22 +45,22 @@ async function recuperePizza() {
 recuperePizza()
 
 // affiche less pizzas
-function displayPizza(data){
+function displayPizza(data) {
     for (let i = 0; i < data.length; i++) {
-        const liPizza     = document.createElement("li");
-        const imgPizza    = document.createElement("img");
-        const divText     = document.createElement("div");
-        const divCount    = document.createElement("div");
-        const nomPizza    = document.createElement("h4");
+        const liPizza = document.createElement("li");
+        const imgPizza = document.createElement("img");
+        const divText = document.createElement("div");
+        const divCount = document.createElement("div");
+        const nomPizza = document.createElement("h4");
         const ingredients = document.createElement("p");
-        const prix        = document.createElement("p");
-        const pCount      = document.createElement("p");
-        
+        const prix = document.createElement("p");
+        const pCount = document.createElement("p");
+
         liPizza.classList.add("list-group-item", "list-group-item-success", "rounded", "p-2", "m-1", "d-flex", "position-relative", "align-sm-items-center");
         imgPizza.classList.add("p-1", "mt-2", "w-25", "h-25");
         imgPizza.setAttribute("src", data[i].image);
         imgPizza.setAttribute("alt", `pizza ${data[i].nom}`);
-        divText.classList.add("mt-2","mx-sm-2");
+        divText.classList.add("mt-2", "mx-sm-2");
         divCount.classList.add("fs-5", "fw-semibold", "position-absolute", "bottom-0", "end-0");
         nomPizza.classList.add("m-0");
         nomPizza.textContent = data[i].nom;
@@ -51,7 +68,7 @@ function displayPizza(data){
         ingredients.textContent = data[i].ingredients;
         prix.classList.add("mb-4", "fw-semibold");
         prix.textContent = `Prix : ${data[i].prix} €`;
-        pCount.innerHTML = '<p class="d-flex p-sm-2 m-1"><i class="bi bi-dash-circle mx-1"></i><span class="count"></span><i class="bi bi-plus-circle mx-1"></i></p>'; 
+        pCount.innerHTML = '<p class="d-flex p-sm-2 m-1"><i class="bi bi-dash-circle mx-1"></i><span class="count"></span><i class="bi bi-plus-circle mx-1"></i></p>';
 
         listPizza.appendChild(liPizza);
         liPizza.appendChild(imgPizza);
@@ -61,8 +78,8 @@ function displayPizza(data){
         divText.appendChild(ingredients);
         divText.appendChild(prix);
         divCount.appendChild(pCount);
-        
     }
 }
+
 
 

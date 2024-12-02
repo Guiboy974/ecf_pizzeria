@@ -30,10 +30,10 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Nos Pizzas</a>
+                            <a class="nav-link active" aria-current="page" href="index.html">Nos Pizzas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Commande en cours</a>
+                            <a class="nav-link" id="commande">Commande en cours</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Nous contacter</a>
@@ -47,8 +47,9 @@
         <div class="m-2">
             <h1>Nos pizzas</h1>
             <select class="form-select form-select-sm w-50 mt-3" id="select-filtre">
-                <option selected>-- filtre --</option>
-
+                <option selected>-- toutes les pizzas --</option>
+                <option value="1">- base tomate -</option>
+                <option value="2">- base crème -</option>
             </select>
         </div>
         <article>
