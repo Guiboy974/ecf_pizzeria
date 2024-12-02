@@ -8,5 +8,5 @@
         "Basilic"
     ],
     "prix": 11,
-    "images": "./images/dijo.jpg"
+    "image": "../images/dijo.jpg"
 }

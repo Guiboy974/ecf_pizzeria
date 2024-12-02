@@ -9,5 +9,5 @@
         "Camembert"
     ],
     "prix": 11,
-    "image": "./images/4fromages.jpg"
+    "image": "../images/4fromages.jpg"
 }

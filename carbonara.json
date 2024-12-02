@@ -9,5 +9,5 @@
         "Parmesan"
     ],
     "prix": 11,
-    "images": "./images/carbo.jpg"
+    "image": "../images/carbo.jpg"
 }

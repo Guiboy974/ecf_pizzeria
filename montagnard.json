@@ -8,5 +8,6 @@
         "Pommes de terres",
         "Lardons"
     ],
-    "prix": 12
+    "prix": 12,
+    "image": "../images/montagnard.jpg"
 }

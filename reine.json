@@ -8,5 +8,5 @@
         "Jambon"
     ],
     "prix": 10,
-    "images": "./images/reine.jpg"
+    "image": "../images/reine.jpg"
 }
