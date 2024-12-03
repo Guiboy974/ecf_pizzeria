@@ -3,9 +3,9 @@
     "base": "tomate",
     "ingredients": [
         "Tomates fraîches",
-        "Mozzarella",
-        "Champignons",
-        "Jambon"
+        " Mozzarella",
+        " Champignons",
+        " Jambon"
     ],
     "prix": 10,
     "image": "../images/reine.jpg"
