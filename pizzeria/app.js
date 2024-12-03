@@ -92,9 +92,7 @@ function addPizzas(event) {
 // affiche commande en cours
 function afficheCommande() {
     container.innerHTML = "";
-
 }
-
 
 filtre.addEventListener("change", filtrerPizza);
 listPizza.addEventListener("click", addPizzas);
