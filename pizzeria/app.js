@@ -1,60 +1,41 @@
 "use strict"
 
+import { recuperePizza } from "./recuperePizza.js";
+
+const pizzas = await recuperePizza();
+
+console.log(pizzas);
+
+
 const listPizza = document.getElementById("list-pizza");
 const filtre = document.getElementById("select-filtre");
 const commande = document.getElementById("commande");
 const container = document.getElementById("main");
 
-// recupère et utilise les données json des pizzas
-async function recuperePizza() {
-    try {
-        const listJson = await Promise.all([
-            fetch('../margherita.json'),
-            fetch('../reine.json'),
-            fetch('../dijo.json'),
-            fetch('../4fromage.json'),
-            fetch('../montagnard.json'),
-            fetch('../carbonara.json')
-        ]);
+//affichage initiale des pizza
+pizzas.forEach(pizzas => displayPizza(pizzas));
 
-        const data = await Promise.all(
-            listJson.map(res => res.json()),
-        );
-        console.log(data)
-
-        // filtre les pizzas
-        function filtrerPizza(event) {
-            const optionValue = event.target.value;
-            const pizzasFiltrees = data.filter(pizza => {
-                switch (optionValue) {
-                    case "1":
-                        return pizza.base === "tomate";
-                    case "2":
-                        return pizza.base === "crème";
-                    default:
-                        return true; // affiche toutes les pizzas
-                }
-            });
-            displayPizzas(pizzasFiltrees);
+// filtre les pizzas
+function filtrerPizza(event) {
+    const optionValue = event.target.value;
+    const pizzasFiltrees = pizzas.filter(pizzas => {
+        switch (optionValue) {
+            case "1":
+                return pizzas.base === "tomate";
+            case "2":
+                return pizzas.base === "crème";
+            default:
+                return true; // affiche toutes les pizzas
         }
-
-        // affiche les pizzas
-        function displayPizzas(pizzas) {
-            listPizza.innerHTML = "";
-            pizzas.forEach(pizza => displayPizza(pizza));
-        }
-
-        filtre.addEventListener("change", filtrerPizza);
-        listPizza.addEventListener("click", addPizzas);
-
-
-        //affichage initiale des pizza
-        data.forEach(data => displayPizza(data));
-    } catch (error) {
-        console.log(error);
-    }
+    });
+    displayPizzas(pizzasFiltrees);
 }
-recuperePizza()
+
+// affiche les pizzas
+function displayPizzas(pizzas) {
+    listPizza.innerHTML = "";
+    pizzas.forEach(pizza => displayPizza(pizza));
+}
 
 // affiche less pizzas
 function displayPizza(data) {
@@ -79,7 +60,7 @@ function displayPizza(data) {
     ingredients.textContent = data.ingredients;
     prix.classList.add("mb-4", "fw-semibold");
     prix.textContent = `Prix : ${data.prix} €`;
-    pCount.innerHTML = '<p class="d-flex p-sm-2 m-1"><i class="bi bi-dash-circle mx-1"></i><span class="count"></span><i class="bi bi-plus-circle mx-1"></i></p>';
+    pCount.innerHTML = '<p class="d-flex p-sm-2 m-1"><i class="bi bi-dash-circle mx-1"></i><span class="count">0</span><i class="bi bi-plus-circle mx-1"></i></p>';
 
     listPizza.appendChild(liPizza);
     liPizza.appendChild(imgPizza);
@@ -92,21 +73,29 @@ function displayPizza(data) {
 }
 
 
-//ajoute les pizzas a commande
-// function addPizzas(event) {
-//     data.forEach(data => {
-//         const count = document.getElementsByClassName("count");
-//         count.textContent = 0;
-//         if (event.target.contains(".bi-plus-circle")) {
-//             count++;
-//             console.log(event.target);
-
-//         }
-//     });
-// }
+// ajoute les pizzas a commande
+function addPizzas(event) {
+    for (let i = 0; i < pizzas.length; i++) {
+        const count = document.getElementsByClassName("count")[i];
+    }
+    if (event.target.classList.contains("bi-plus-circle")) {
+        event.target.previousSibling.textContent++;
+    }
+    if (event.target.classList.contains("bi-dash-circle")) {
+        event.target.nextSibling.textContent--;
+        if (event.target.nextSibling.textContent <= 0) {
+            event.target.nextSibling.textContent = 0
+        }
+    }
+}
 
 // affiche commande en cours
 function afficheCommande() {
+    container.innerHTML = "";
 
 }
+
+
+filtre.addEventListener("change", filtrerPizza);
+listPizza.addEventListener("click", addPizzas);
 commande.addEventListener("click", afficheCommande);
