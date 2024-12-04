@@ -184,4 +184,4 @@ ulPizza.addEventListener("click", addCommande);
 commande.addEventListener("click", afficheCommande);
 containerPizza.addEventListener("click", modifieCommande);
 containerPizza.addEventListener("click", afficheForm);
-containerPizza.addEventListener("click", controleForm);
+containerPizza.addEventListener("click", controleForm)

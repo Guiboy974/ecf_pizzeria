@@ -67,6 +67,7 @@ export function afficheForm(event) {
         inputNom.classList.add("form-control");
         inputNom.setAttribute("id", "inputNom");
         inputNom.setAttribute("type", "text");
+        inputNom.setAttribute("required", "");
         divNom.appendChild(labelNom);
         divNom.appendChild(inputNom);
 
@@ -79,6 +80,7 @@ export function afficheForm(event) {
         inputPhone.classList.add("form-control");
         inputPhone.setAttribute("id", "inputPhone");
         inputPhone.setAttribute("type", "text");
+        inputPhone.setAttribute("required", "");
         divPhone.appendChild(labelPhone);
         divPhone.appendChild(inputPhone);
 
@@ -92,6 +94,7 @@ export function afficheForm(event) {
         inputAdresse.setAttribute("id", "inputAdresse");
         inputAdresse.setAttribute("type", "text");
         inputAdresse.setAttribute("placeholder", "12 rue de chez toi")
+        inputAdresse.setAttribute("required", "");
         divAdresseP.appendChild(labelAdresse);
         divAdresseP.appendChild(inputAdresse);
 
@@ -104,6 +107,7 @@ export function afficheForm(event) {
         inputAdresseS.setAttribute("id", "inputAdresse2");
         inputAdresseS.setAttribute("type", "text");
         inputAdresseS.setAttribute("placeholder", "Appartement, étage, ...")
+        inputAdresseS.setAttribute("required", "");
         divAdresseS.appendChild(labelAdresseS);
         divAdresseS.appendChild(inputAdresseS);
 
@@ -116,6 +120,7 @@ export function afficheForm(event) {
         inputCodeP.classList.add("form-control");
         inputCodeP.setAttribute("id", "inputCodeP");
         inputCodeP.setAttribute("type", "text");
+        inputCodeP.setAttribute("required", "");
         divCodeP.appendChild(labelCodeP);
         divCodeP.appendChild(inputCodeP);
 
@@ -128,6 +133,7 @@ export function afficheForm(event) {
         inputVille.classList.add("form-control");
         inputVille.setAttribute("id", "inputVille");
         inputVille.setAttribute("type", "text");
+        inputVille.setAttribute("required", "");
         divVille.appendChild(labelVille);
         divVille.appendChild(inputVille);
 
@@ -153,29 +159,26 @@ export function afficheForm(event) {
                 inputVille.removeAttribute("disabled")
             }
         })
+
     }
 }
 
 //controle le formulaire avant envoie
 export function controleForm(event) {
-    event.preventDefault();
-
     const radioLivraison = document.getElementById("livraison")
 
     if (event.target.classList.contains("payer")) {
         if (radioLivraison.checked === true) {
-            console.log(event.target);
-            
-            const validation = document.querySelectorAll(".form-control");
-            validation.forEach(validation => {
-                if (validation.value == "") {
-                    console.log(true);
-                    const divAlert = document.createElement("div");
-                    divAlert.innerHTML = `<div class="alert alert-danger" role="alert">Attention champ vide</div>`;
-                    containerPizza.appendChild(divAlert)
-                }
 
-            })
+            // regexText.test(nom)
+            // regexText /[a-zA-Z]{3,}/g
+
+            // regex tel /^0[1-9]\d{8}$/
+
+            // regex code postal /[1-9]\d{5}$/
+            // regexText.test(ville)
         }
+
     }
 }
+
