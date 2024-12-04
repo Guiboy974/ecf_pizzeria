@@ -3,10 +3,10 @@
     "base": "tomate",
     "ingredients": [
         "Tomates fraîches",
-        "Mozzarella",
-        "Chèvre",
-        "Gorgonzolla",
-        "Camembert"
+        " Mozzarella",
+        " Chèvre",
+        " Gorgonzolla",
+        " Camembert"
     ],
     "prix": 11,
     "image": "../images/4fromages.jpg"
