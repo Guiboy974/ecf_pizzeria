@@ -1,16 +1,17 @@
 "use strict"
 
 import { recuperePizza } from "./recuperePizza.js";
+import { afficheForm, controleForm } from "./form.js"
 
 const pizzas = await recuperePizza();
 
-console.log(pizzas);
-
-
-const listPizza = document.getElementById("list-pizza");
+const ulPizza = document.getElementById("list-pizza");
 const filtre = document.getElementById("select-filtre");
 const commande = document.getElementById("commande");
-const container = document.getElementById("main");
+export const containerPizza = document.getElementById("main");
+let commandePizza = [];
+
+
 
 //affichage initiale des pizza
 pizzas.forEach(pizzas => displayPizza(pizzas));
@@ -33,11 +34,11 @@ function filtrerPizza(event) {
 
 // affiche les pizzas
 function displayPizzas(pizzas) {
-    listPizza.innerHTML = "";
+    ulPizza.innerHTML = "";
     pizzas.forEach(pizza => displayPizza(pizza));
 }
 
-// affiche less pizzas
+// creer li d'une pizza
 function displayPizza(data) {
     const liPizza = document.createElement("li");
     const imgPizza = document.createElement("img");
@@ -47,13 +48,14 @@ function displayPizza(data) {
     const ingredients = document.createElement("p");
     const prix = document.createElement("p");
     const pCount = document.createElement("p");
+    const btnAdd = document.createElement("button")
 
-    liPizza.classList.add("list-group-item", "list-group-item-success", "rounded", "p-2", "m-1", "d-flex", "position-relative", "align-sm-items-center");
-    imgPizza.classList.add("p-1", "mt-2", "w-25", "h-25");
+    liPizza.classList.add("list-group-item", "list-group-item-success", "p-2", "d-flex", "position-relative", "align-sm-items-center");
+    imgPizza.classList.add("p-1", "mt-2", "w-25", "h-auto");
     imgPizza.setAttribute("src", data.image);
     imgPizza.setAttribute("alt", `pizza ${data.nom}`);
     divText.classList.add("mt-2", "mx-sm-2");
-    divCount.classList.add("fs-5", "fw-semibold", "position-absolute", "bottom-0", "end-0");
+    divCount.classList.add("fs-5", "fw-semibold", "position-absolute", "top-0", "end-0");
     nomPizza.classList.add("m-0");
     nomPizza.textContent = data.nom;
     ingredients.classList.add("m-0", "fs-6", "text-wrap");
@@ -61,23 +63,22 @@ function displayPizza(data) {
     prix.classList.add("mb-4", "fw-semibold");
     prix.textContent = `Prix : ${data.prix} €`;
     pCount.innerHTML = '<p class="d-flex p-sm-2 m-1"><i class="bi bi-dash-circle mx-1"></i><span class="count">0</span><i class="bi bi-plus-circle mx-1"></i></p>';
+    btnAdd.classList.add("btn", "btn-success", "m-1", "position-absolute", "bottom-0", "end-0");
+    btnAdd.textContent = "Ajouter";
 
-    listPizza.appendChild(liPizza);
+    ulPizza.appendChild(liPizza);
     liPizza.appendChild(imgPizza);
     liPizza.appendChild(divText);
     liPizza.appendChild(divCount);
+    liPizza.appendChild(btnAdd)
     divText.appendChild(nomPizza);
     divText.appendChild(ingredients);
     divText.appendChild(prix);
     divCount.appendChild(pCount);
 }
 
-
-// ajoute les pizzas a commande
-function addPizzas(event) {
-    for (let i = 0; i < pizzas.length; i++) {
-        const count = document.getElementsByClassName("count")[i];
-    }
+// ajoute ou retire le nombre de pizzas voulu
+function addPizza(event) {
     if (event.target.classList.contains("bi-plus-circle")) {
         event.target.previousSibling.textContent++;
     }
@@ -89,11 +90,98 @@ function addPizzas(event) {
     }
 }
 
+// ajoute a la commande
+function addCommande(event) {
+    if (event.target.tagName === "BUTTON") {
+        for (let i = 0; i < pizzas.length; i++) {
+            if (pizzas[i].nom == event.target.previousSibling.previousSibling.firstChild.textContent) {
+                const count = document.getElementsByClassName("count")[i];
+                let countPizza = count.textContent;
+                let prixPizzas = pizzas[i].prix * countPizza;
+                commandePizza.push({
+                    nom: pizzas[i].nom,
+                    prix: pizzas[i].prix,
+                    nombre: count.textContent,
+                    prixtotal: prixPizzas
+                })
+            }
+        }
+    }
+}
+
 // affiche commande en cours
-function afficheCommande() {
-    container.innerHTML = "";
+export function afficheCommande() {
+    containerPizza.innerHTML = "";
+    const ulPizza = document.createElement("ul");
+    ulPizza.classList.add("list-group", "list-group-flush", "mt-3", "rounded");
+    containerPizza.appendChild(ulPizza);
+    let prixTotal = 0;
+    commandePizza.forEach(element => {
+        const liPizza = document.createElement("li");
+        const nomPizza = document.createElement("p");
+        const prixPizza = document.createElement("span");
+        const divSupp = document.createElement("p");
+
+        liPizza.classList.add("list-group-item", "list-group-item-success", "position-relative");
+        nomPizza.classList.add("m-0", "fw-semibold", "fs-4");
+        nomPizza.textContent = `${element.nom}`;
+        prixPizza.classList.add("d-flex", "justify-content-end", "fs-4", "fw-semibold");
+        prixPizza.textContent = `${element.prixtotal} €`;
+        divSupp.classList.add("position-absolute", "top-0", "end-0", "fs-5")
+        divSupp.innerHTML = `<p class="d-flex p-sm-1 mt-1"><i class="bi bi-dash-circle mx-1 moins"></i><span class="count">${element.nombre}</span><i class="bi bi-plus-circle mx-1 plus"></i></p>`
+
+        ulPizza.appendChild(liPizza);
+        liPizza.appendChild(nomPizza);
+        liPizza.appendChild(prixPizza);
+        liPizza.appendChild(divSupp)
+        prixTotal = prixTotal + element.prixtotal;
+    });
+
+    const divPrix = document.createElement("div");
+    const pTotal = document.createElement("p");
+    const btnCommande = document.createElement("button");
+
+    divPrix.classList.add("d-flex", "flex-column", "justify-content-end", "p-1");
+    pTotal.classList.add("align-self-center", "mt-2", "fw-bold");
+    pTotal.textContent = `Total: ${prixTotal} €`;
+    btnCommande.classList.add("btn", "btn-success", "m-1", "commande");
+    btnCommande.textContent = "Commander";
+
+    containerPizza.appendChild(divPrix);
+    divPrix.appendChild(pTotal);
+    divPrix.appendChild(btnCommande);
+}
+
+//modifie la commande 
+function modifieCommande(event) {
+
+    if (event.target.classList.contains("plus")) {
+        for (let i = 0; i < commandePizza.length; i++) {
+            if (commandePizza[i].nom == event.target.parentElement.parentElement.parentElement.firstChild.textContent) {
+                commandePizza[i].nombre++;
+                commandePizza[i].prixtotal += commandePizza[i].prix;
+                afficheCommande()
+            }
+        }
+    }
+    if (event.target.classList.contains("moins")) {
+        for (let i = 0; i < commandePizza.length; i++) {
+            if (commandePizza[i].nom == event.target.parentElement.parentElement.parentElement.firstChild.textContent) {
+                commandePizza[i].nombre--;
+                commandePizza[i].prixtotal -= commandePizza[i].prix;
+                if (event.target.nextSibling.textContent < 1) {
+                    commandePizza.splice(i, 1);
+                }
+            }
+            afficheCommande()
+        }
+    }
 }
 
 filtre.addEventListener("change", filtrerPizza);
-listPizza.addEventListener("click", addPizzas);
+ulPizza.addEventListener("click", addPizza);
+ulPizza.addEventListener("click", addCommande);
 commande.addEventListener("click", afficheCommande);
+containerPizza.addEventListener("click", modifieCommande);
+containerPizza.addEventListener("click", afficheForm);
+containerPizza.addEventListener("click", controleForm);

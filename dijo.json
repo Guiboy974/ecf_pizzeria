@@ -3,9 +3,9 @@
     "base": "tomate",
     "ingredients": [
         "Tomates fraîches",
-        "Mozzarella",
-        "Chorizo",
-        "Basilic"
+        " Mozzarella",
+        " Chorizo",
+        " Basilic"
     ],
     "prix": 11,
     "image": "../images/dijo.jpg"

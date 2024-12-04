@@ -14,11 +14,19 @@
     <meta name="description"
         content="Pizzeria Casa di Jo, secteur Metz Woippy, pizza aux feux de bois, pizza traditionnel, pizza base tomate, pizza base crème">
     <title>Casa Di Jo Pizzeria</title>
+    <style>
+        @media screen and (min-width: 992px)  {
+            #list-pizza li {
+                height: 250px;
+            }
+        }   
+    </style>
 </head>
 
-<body class="bg-dark text-white">
+<body class="bg-dark text-white mx-auto">
     <header>
-        <picture><img class="img-fluid mx-auto d-block" src="../images/emotionheader.jpg" alt="logo casa di jo, pizza aux feux de bois">
+        <picture><img class="img-fluid mx-auto d-block" src="../images/emotionheader.jpg"
+                alt="logo casa di jo, pizza aux feux de bois">
         </picture>
         <nav class="navbar mt-2 navbar-expand-lg bg-success d-flex justify-content-center">
             <div class="">
@@ -53,7 +61,7 @@
             </select>
         </div>
         <article>
-            <ul class="list-group list-group-flush mt-3" id="list-pizza">
+            <ul class="list-group list-group-flush mt-3 rounded" id="list-pizza">
             </ul>
         </article>
     </main>

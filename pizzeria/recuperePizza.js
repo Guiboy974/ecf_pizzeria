@@ -1,7 +1,4 @@
 // recupère et utilise les données json des pizzas
-
-// export const pizzas = [];
-
 export async function recuperePizza() {
     try {
         const listJson = await Promise.all([
@@ -21,4 +18,3 @@ export async function recuperePizza() {
         console.log(error);
     }
 }
-recuperePizza()

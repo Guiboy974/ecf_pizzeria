@@ -3,10 +3,10 @@
     "base": "crème",
     "ingredients": [
         "Crème fraîches",
-        "Mozzarella",
-        "Lardons",
-        "Oeufs",
-        "Parmesan"
+        " Mozzarella",
+        " Lardons",
+        " Oeufs",
+        " Parmesan"
     ],
     "prix": 11,
     "image": "../images/carbo.jpg"
