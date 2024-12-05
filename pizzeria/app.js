@@ -121,7 +121,7 @@ export function afficheCommande() {
         const prixPizza = document.createElement("span");
         const divSupp = document.createElement("p");
 
-        liPizza.classList.add("list-group-item", "list-group-item-success", "position-relative", "col-6","mx-auto");
+        liPizza.classList.add("list-group-item", "list-group-item-success", "position-relative", "col-md-6", "mx-md-auto");
         nomPizza.classList.add("m-0", "fw-semibold", "fs-4","text-decoration-underline");
         nomPizza.textContent = `${element.nom}`;
         prixPizza.classList.add("d-flex", "justify-content-end", "fs-4", "fw-semibold");
@@ -183,6 +183,8 @@ function afficheValidation(event) {
         if (infoClient.length !== 0) {
             containerPizza.innerHTML = "";
             infoClient[0].commande = commandePizza
+            console.log(infoClient);
+            
             const divCard = document.createElement("section");
             const cardBody = document.createElement("div");
             const cardTitle = document.createElement("h4");
@@ -193,7 +195,7 @@ function afficheValidation(event) {
             cardTitle.classList.add("card-title");
             cardTitle.textContent = "Commande en cours de préparation";
             cardText.classList.add("card-text");
-            cardText.innerHTML = `Votre commende a été validé.<br> 
+            cardText.innerHTML = `Votre commande a été validé.<br> 
          Merci d'avoir commandé chez Casa Di Jo.`;
 
             containerPizza.appendChild(divCard);

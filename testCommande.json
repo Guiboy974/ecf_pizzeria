@@ -1,0 +1,56 @@
+[{
+        "client": "nom",
+        "telephone": "0646464646",
+        "commande":[
+            {
+                "nom": "Margherita",
+                "nombre": "1",
+                "prix": 9,
+                "prixtotal": 9
+            },
+            {
+                "nom": "Reine",
+                "nombre": "1",
+                "prix": 10,
+                "prixtotal": 1
+            }
+        ],
+        "id": 1
+
+},
+{
+    "client": "nom2",
+    "telephone": "0746464646",
+    "adresse": "12 rue de chez oim",
+    "adresseZip": "97410 Maville",
+    "commande":[
+        {
+            "nom": "Margherita",
+            "nombre": "2",
+            "prix": 9,
+            "prixtotal": 18
+        }
+    ],
+    "id": 2
+
+},
+{
+    "client": "nom",
+    "telephone": "0646464646",
+    "commande":[
+        {
+            "nom": "Margherita",
+            "nombre": "1",
+            "prix": 9,
+            "prixtotal": 9
+        },
+        {
+            "nom": "Reine",
+            "nombre": "1",
+            "prix": 10,
+            "prixtotal": 1
+        }
+    ],
+    "id": 3
+}
+]
