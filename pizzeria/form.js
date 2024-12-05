@@ -8,6 +8,7 @@ import { afficheCommande, containerPizza } from "./app.js"
 export function afficheForm(event) {
     if (event.target.classList.contains("commande")) {
         afficheCommande()
+        event.target.remove()
 
         const titreForm = document.createElement("h2")
         const form = document.createElement("form")
@@ -56,7 +57,7 @@ export function afficheForm(event) {
         fielsetInput.appendChild(divAdresseS);
         fielsetInput.appendChild(divCodeP);
         fielsetInput.appendChild(divVille);
-        containerPizza.appendChild(divPayer);
+        fielsetInput.appendChild(divPayer);
 
         //input nom
         const labelNom = document.createElement("label");
@@ -67,7 +68,6 @@ export function afficheForm(event) {
         inputNom.classList.add("form-control");
         inputNom.setAttribute("id", "inputNom");
         inputNom.setAttribute("type", "text");
-        inputNom.setAttribute("required", "");
         divNom.appendChild(labelNom);
         divNom.appendChild(inputNom);
 
@@ -79,8 +79,7 @@ export function afficheForm(event) {
         labelPhone.setAttribute("for", "inputPhone");
         inputPhone.classList.add("form-control");
         inputPhone.setAttribute("id", "inputPhone");
-        inputPhone.setAttribute("type", "text");
-        inputPhone.setAttribute("required", "");
+        inputPhone.setAttribute("type", "number");
         divPhone.appendChild(labelPhone);
         divPhone.appendChild(inputPhone);
 
@@ -94,7 +93,6 @@ export function afficheForm(event) {
         inputAdresse.setAttribute("id", "inputAdresse");
         inputAdresse.setAttribute("type", "text");
         inputAdresse.setAttribute("placeholder", "12 rue de chez toi")
-        inputAdresse.setAttribute("required", "");
         divAdresseP.appendChild(labelAdresse);
         divAdresseP.appendChild(inputAdresse);
 
@@ -107,7 +105,6 @@ export function afficheForm(event) {
         inputAdresseS.setAttribute("id", "inputAdresse2");
         inputAdresseS.setAttribute("type", "text");
         inputAdresseS.setAttribute("placeholder", "Appartement, étage, ...")
-        inputAdresseS.setAttribute("required", "");
         divAdresseS.appendChild(labelAdresseS);
         divAdresseS.appendChild(inputAdresseS);
 
@@ -119,21 +116,19 @@ export function afficheForm(event) {
         labelCodeP.setAttribute("for", "inputCodeP");
         inputCodeP.classList.add("form-control");
         inputCodeP.setAttribute("id", "inputCodeP");
-        inputCodeP.setAttribute("type", "text");
-        inputCodeP.setAttribute("required", "");
+        inputCodeP.setAttribute("type", "number");
         divCodeP.appendChild(labelCodeP);
         divCodeP.appendChild(inputCodeP);
 
         //input ville
         const labelVille = document.createElement("label");
         const inputVille = document.createElement("input");
-        labelVille.textContent = "Code postal";
+        labelVille.textContent = "Ville";
         labelVille.classList.add("form-label");
         labelVille.setAttribute("for", "inputVille");
         inputVille.classList.add("form-control");
         inputVille.setAttribute("id", "inputVille");
         inputVille.setAttribute("type", "text");
-        inputVille.setAttribute("required", "");
         divVille.appendChild(labelVille);
         divVille.appendChild(inputVille);
 
@@ -141,6 +136,7 @@ export function afficheForm(event) {
         const btnPayer = document.createElement("button")
         btnPayer.textContent = "Payer";
         btnPayer.classList.add("btn", "btn-success", "payer")
+        btnPayer.setAttribute("type", "submit")
         divPayer.appendChild(btnPayer)
 
         // desactive une partie dur formulaire
@@ -165,18 +161,87 @@ export function afficheForm(event) {
 
 //controle le formulaire avant envoie
 export function controleForm(event) {
-    const radioLivraison = document.getElementById("livraison")
+    const radioLivraison = document.getElementById("livraison");
+    const radioEmporte   = document.getElementById("emporte");
+    const inputNom       = document.getElementById("inputNom");
+    const inputPhone     = document.getElementById("inputPhone");
+    const inputAdresse   = document.getElementById("inputAdresse");
+    const inputAdresseS  = document.getElementById("inputAdresse2")
+    const inputCodeP     = document.getElementById("inputCodeP");
+    const inputVille     = document.getElementById("inputVille");
+
 
     if (event.target.classList.contains("payer")) {
-        if (radioLivraison.checked === true) {
+        event.preventDefault();
 
-            // regexText.test(nom)
-            // regexText /[a-zA-Z]{3,}/g
+        const divAlert     = document.createElement("div");
+        divAlert.innerHTML = "";
+        containerPizza.appendChild(divAlert);
 
-            // regex tel /^0[1-9]\d{8}$/
+        const regexText    = new RegExp(/[a-zA-Z]{3,}/g);
+        const regexTel     = new RegExp(/[0-9]{10,}/g);
+        const regexAdresse = new RegExp(/^\d+\s+[a-zA-ZÀ-ÿ\s-]+$/);
+        const regexZip     = new RegExp(/[0-9]{5,}/g);
+        const regexVille   = new RegExp(/[a-zA-Z]{3,}/g);
 
-            // regex code postal /[1-9]\d{5}$/
-            // regexText.test(ville)
+
+        if (regexText.test(inputNom.value)) {
+            if (regexTel.test(inputPhone.value)) {
+                inputNom.classList.remove("is-invalid");
+                inputPhone.classList.remove("is-invalid");
+
+                if (radioLivraison.checked === true) {
+                    if (regexAdresse.test(inputAdresse.value)) {
+                        inputAdresse.classList.remove("is-invalid");
+
+                        if (regexZip.test(inputCodeP.value)) {
+                            inputCodeP.classList.remove("is-invalid");
+
+                            if (regexVille.test(inputVille.value)) {
+
+                                //ajoute toute les informations de livraison
+                                infoClient.push({
+                                    client: inputNom.value,
+                                    telephone: inputPhone.value,
+                                    adresse: `${inputAdresse.value} ${inputAdresseS.value}`,
+                                    adresseZip: `${inputCodeP.value} ${inputVille.value}`
+                                })
+                            
+                                console.log(infoClient);
+                                inputVille.classList.remove("is-invalid");
+
+                            } else {
+                                inputVille.value = "";
+                                console.log(inputVille.value);
+                                inputVille.classList.add("is-invalid");
+                            }
+                        } else {
+                            inputCodeP.value = "";
+                            inputCodeP.classList.add("is-invalid");
+                        }
+                    } else {
+                        inputAdresse.value = "";
+                        inputAdresse.classList.add("is-invalid");
+                    }
+
+                } else if (radioEmporte.checked === false) {
+                    divAlert.innerHTML = `<div class="alert alert-danger m-2" role="alert">*option de récupération non sélectionner</div>`;
+                    containerPizza.appendChild(divAlert);
+                }
+
+                // ajoute des nom et numéro a la commande uniquement si a emporté
+                infoClient.push({
+                    client: inputNom.value,
+                    telephone: inputPhone.value
+                })
+
+            } else {
+                inputPhone.value = "";
+                inputPhone.classList.add("is-invalid");
+            }
+        } else {
+            inputNom.value = "";
+            inputNom.classList.add("is-invalid");
         }
 
     }
