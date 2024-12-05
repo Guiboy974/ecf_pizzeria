@@ -121,8 +121,8 @@ export function afficheCommande() {
         const prixPizza = document.createElement("span");
         const divSupp = document.createElement("p");
 
-        liPizza.classList.add("list-group-item", "list-group-item-success", "position-relative");
-        nomPizza.classList.add("m-0", "fw-semibold", "fs-4");
+        liPizza.classList.add("list-group-item", "list-group-item-success", "position-relative", "col-6","mx-auto");
+        nomPizza.classList.add("m-0", "fw-semibold", "fs-4","text-decoration-underline");
         nomPizza.textContent = `${element.nom}`;
         prixPizza.classList.add("d-flex", "justify-content-end", "fs-4", "fw-semibold");
         prixPizza.textContent = `${element.prixtotal} €`;
@@ -143,7 +143,7 @@ export function afficheCommande() {
     divPrix.classList.add("d-flex", "flex-column", "justify-content-end", "p-1");
     pTotal.classList.add("align-self-center", "mt-2", "fw-bold");
     pTotal.textContent = `Total: ${prixTotal} €`;
-    btnCommande.classList.add("btn", "btn-success", "m-1", "commande");
+    btnCommande.classList.add("btn", "btn-success", "my-1", "commande", "col-md-6", "mx-auto") 
     btnCommande.textContent = "Commander";
 
     containerPizza.appendChild(divPrix);
