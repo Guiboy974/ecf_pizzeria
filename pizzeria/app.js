@@ -1,7 +1,7 @@
 "use strict"
 
 import { recuperePizza } from "./recuperePizza.js";
-import { afficheForm, controleForm } from "./form.js"
+import { afficheForm, controleForm, infoClient } from "./form.js"
 
 const pizzas = await recuperePizza();
 
@@ -9,8 +9,7 @@ const ulPizza = document.getElementById("list-pizza");
 const filtre = document.getElementById("select-filtre");
 const commande = document.getElementById("commande");
 export const containerPizza = document.getElementById("main");
-let commandePizza = [];
-
+export let commandePizza = [];
 
 
 //affichage initiale des pizza
@@ -60,7 +59,7 @@ function displayPizza(data) {
     nomPizza.textContent = data.nom;
     ingredients.classList.add("m-0", "fs-6", "text-wrap");
     ingredients.textContent = data.ingredients;
-    prix.classList.add("mb-4","mb-md-2", "fw-semibold");
+    prix.classList.add("mb-4", "mb-md-2", "fw-semibold");
     prix.textContent = `Prix : ${data.prix} €`;
     pCount.innerHTML = '<p class="d-flex p-sm-2 m-1"><i class="bi bi-dash-circle mx-1"></i><span class="count">0</span><i class="bi bi-plus-circle mx-1"></i></p>';
     btnAdd.classList.add("btn", "btn-success", "m-1", "position-absolute", "bottom-0", "end-0");
@@ -178,10 +177,39 @@ function modifieCommande(event) {
     }
 }
 
+//affiche validation de commande 
+function afficheValidation(event) {
+    if (event.target.classList.contains("payer")) {
+        if (infoClient.length !== 0) {
+            containerPizza.innerHTML = "";
+            infoClient[0].commande = commandePizza
+            const divCard = document.createElement("section");
+            const cardBody = document.createElement("div");
+            const cardTitle = document.createElement("h4");
+            const cardText = document.createElement("p");
+
+            divCard.classList.add("card", "w-75", "mx-auto", "border-success");
+            cardBody.classList.add("card-body", "text-success");
+            cardTitle.classList.add("card-title");
+            cardTitle.textContent = "Commande en cours de préparation";
+            cardText.classList.add("card-text");
+            cardText.innerHTML = `Votre commende a été validé.<br> 
+         Merci d'avoir commandé chez Casa Di Jo.`;
+
+            containerPizza.appendChild(divCard);
+            divCard.appendChild(cardBody);
+            cardBody.appendChild(cardTitle);
+            cardBody.appendChild(cardText);
+        }
+    }
+}
+
 filtre.addEventListener("change", filtrerPizza);
 ulPizza.addEventListener("click", addPizza);
 ulPizza.addEventListener("click", addCommande);
 commande.addEventListener("click", afficheCommande);
 containerPizza.addEventListener("click", modifieCommande);
 containerPizza.addEventListener("click", afficheForm);
-containerPizza.addEventListener("click", controleForm)
+containerPizza.addEventListener("click", controleForm);
+containerPizza.addEventListener("click", afficheValidation);
+
