@@ -151,7 +151,7 @@ export function afficheCommande() {
     divPrix.appendChild(btnCommande);
 }
 
-//modifie la commande 
+//modifie la commande +/- jusqu'à supppression
 function modifieCommande(event) {
 
     if (event.target.classList.contains("plus")) {
