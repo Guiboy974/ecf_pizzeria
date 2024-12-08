@@ -2,12 +2,12 @@
     "nom": "Carbonara",
     "base": "crème",
     "ingredients": [
-        "Crème fraîches",
-        " Mozzarella",
-        " Lardons",
-        " Oeufs",
+        "Crème fraîche",
+        " Mozza",
+        " Lardon",
+        " Oeuf",
         " Parmesan"
     ],
     "prix": 11,
-    "image": "../images/carbo.jpg"
+    "image": "../images/carbonara.jpg"
 }

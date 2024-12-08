@@ -2,11 +2,10 @@
     "nom": "Margherita",
     "base": "tomate",
     "ingredients": [
-        "Tomates fraîches",
-        " Mozzarella",
+        "Sauce tomate",
+        " Mozza",
         " Basilic",
-        " Huile d'olive",
-        " Sel"
+        " Huile d'olive"
     ],
     "prix": 9,
     "image": "../images/margherita.jpg"

@@ -2,11 +2,11 @@
     "nom": "Montagnard",
     "base": "crème",
     "ingredients": [
-        "Crème fraîches",
-        " Mozzarella",
+        "Crème fraîche",
+        " Mozza",
         " Raclette",
-        " Pommes de terres",
-        " Lardons"
+        " Patate",
+        " Lardon"
     ],
     "prix": 12,
     "image": "../images/montagnard.jpg"
