@@ -10,6 +10,7 @@ const filtre = document.getElementById("select-filtre");
 const commande = document.getElementById("commande");
 export const containerPizza = document.getElementById("main");
 export let commandePizza = [];
+let nbPizza = document.getElementsByClassName("nb-pizza")[0];
 
 
 //affichage initiale des pizza
@@ -97,6 +98,7 @@ function addCommande(event) {
                 const count = document.getElementsByClassName("count")[i];
                 let countPizza = count.textContent;
                 let prixPizzas = pizzas[i].prix * countPizza;
+                nbPizza.textContent = Number(nbPizza.textContent) + Number(count.textContent);
                 commandePizza.push({
                     nom: pizzas[i].nom,
                     prix: pizzas[i].prix,
@@ -159,6 +161,8 @@ function modifieCommande(event) {
             if (commandePizza[i].nom == event.target.parentElement.parentElement.parentElement.firstChild.textContent) {
                 commandePizza[i].nombre++;
                 commandePizza[i].prixtotal += commandePizza[i].prix;
+                nbPizza.textContent++;
+
                 afficheCommande()
             }
         }
@@ -171,6 +175,7 @@ function modifieCommande(event) {
                 if (event.target.nextSibling.textContent < 1) {
                     commandePizza.splice(i, 1);
                 }
+                nbPizza.textContent--;
             }
             afficheCommande()
         }
