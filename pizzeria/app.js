@@ -1,5 +1,21 @@
 "use strict"
 
+// Initialisation des popovers
+document.addEventListener('DOMContentLoaded', function () {
+    function initPopovers() {
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+        [...popoverTriggerList].forEach(element => {
+            new bootstrap.Popover(element, {
+                trigger: 'manual'
+            });
+        });
+    }
+
+    // Rendre la fonction accessible globalement
+    window.initPopovers = initPopovers;
+    initPopovers();
+});
+
 import { recuperePizza } from "./recuperePizza.js";
 import { afficheForm, controleForm, infoClient } from "./form.js"
 
@@ -66,6 +82,14 @@ function displayPizza(data) {
     btnAdd.classList.add("btn", "btn-success", "m-1", "position-absolute", "bottom-0", "end-0");
     btnAdd.textContent = "Ajouter";
 
+    // Ajout des attributs Bootstrap pour le popover
+    btnAdd.setAttribute("data-bs-container", "body");
+    btnAdd.setAttribute("data-bs-toggle", "popover");
+    btnAdd.setAttribute("data-bs-placement", "top");
+    btnAdd.setAttribute("data-bs-content", "Ajouté &#x2705;");
+    btnAdd.setAttribute("data-bs-html", "true");
+    btnAdd.setAttribute("aria-describedby", "checked");
+
     ulPizza.appendChild(liPizza);
     liPizza.appendChild(imgPizza);
     liPizza.appendChild(divText);
@@ -75,6 +99,14 @@ function displayPizza(data) {
     divText.appendChild(ingredients);
     divText.appendChild(prix);
     divCount.appendChild(pCount);
+
+    // Initialiser le popover après avoir ajouté le bouton au DOM
+    setTimeout(() => {
+        const popover = new bootstrap.Popover(btnAdd, {
+            trigger: 'manual',
+            html: true
+        });
+    }, 0);
 }
 
 // ajoute ou retire le nombre de pizzas voulu
@@ -118,6 +150,14 @@ function addCommande(event) {
                 }
             }
         }
+        // Gérer le popover après l'ajout
+        const popover = bootstrap.Popover.getInstance(event.target);
+        if (popover) {
+            popover.show();
+            setTimeout(() => {
+                popover.hide();
+            }, 1500);
+        }
     }
 }
 
@@ -135,7 +175,7 @@ export function afficheCommande() {
         const divSupp = document.createElement("p");
 
         liPizza.classList.add("list-group-item", "list-group-item-success", "position-relative", "col-md-6", "mx-md-auto");
-        nomPizza.classList.add("m-0", "fw-semibold", "fs-4","text-decoration-underline");
+        nomPizza.classList.add("m-0", "fw-semibold", "fs-4", "text-decoration-underline");
         nomPizza.textContent = `${element.nom}`;
         prixPizza.classList.add("d-flex", "justify-content-end", "fs-4", "fw-semibold");
         prixPizza.textContent = `${element.prixtotal} €`;
@@ -156,7 +196,7 @@ export function afficheCommande() {
     divPrix.classList.add("d-flex", "flex-column", "justify-content-end", "p-1");
     pTotal.classList.add("align-self-center", "mt-2", "fw-bold");
     pTotal.textContent = `Total: ${prixTotal} €`;
-    btnCommande.classList.add("btn", "btn-success", "my-1", "commande", "col-md-6", "mx-auto") 
+    btnCommande.classList.add("btn", "btn-success", "my-1", "commande", "col-md-6", "mx-auto")
     btnCommande.textContent = "Commander";
 
     containerPizza.appendChild(divPrix);
@@ -179,16 +219,27 @@ function modifieCommande(event) {
         }
     }
     if (event.target.classList.contains("moins")) {
-        for (let i = 0; i < commandePizza.length; i++) {
-            if (commandePizza[i].nom == event.target.parentElement.parentElement.parentElement.firstChild.textContent) {
-                commandePizza[i].nombre--;
-                commandePizza[i].prixtotal -= commandePizza[i].prix;
-                if (event.target.nextSibling.textContent < 1) {
-                    commandePizza.splice(i, 1);
-                }
-                nbPizza.textContent--;
+        const nomPizzaARetirer = event.target.parentElement.parentElement.parentElement.firstChild.textContent;
+        // Chercher la pizza dans le tableau de commandes
+        const indexPizza = commandePizza.findIndex(pizza => pizza.nom === nomPizzaARetirer);
+        if (indexPizza !== -1) {
+            commandePizza[indexPizza].nombre--;
+
+            // Mettre à jour le prix total
+            commandePizza[indexPizza].prixtotal = commandePizza[indexPizza].nombre * commandePizza[indexPizza].prix;
+
+            // Mettre à jour l'affichage
+            const nombreElement = event.target.nextElementSibling;
+            nombreElement.textContent = commandePizza[indexPizza].nombre;
+            if (commandePizza[indexPizza].nombre <= 0) {
+                commandePizza.splice(indexPizza, 1);
             }
-            afficheCommande()
+
+            // Mettre à jour le compteur total de pizzas
+            const totalPizzas = commandePizza.reduce((total, pizza) => total + pizza.nombre, 0);
+            nbPizza.textContent = Math.max(0, totalPizzas);
+
+            afficheCommande();
         }
     }
 }
@@ -200,7 +251,7 @@ function afficheValidation(event) {
             containerPizza.innerHTML = "";
             infoClient[0].commande = commandePizza
             console.log(infoClient);
-            
+
             const divCard = document.createElement("section");
             const cardBody = document.createElement("div");
             const cardTitle = document.createElement("h4");
