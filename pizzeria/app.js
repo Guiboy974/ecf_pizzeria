@@ -66,7 +66,7 @@ function displayPizza(data) {
     const pCount = document.createElement("p");
     const btnAdd = document.createElement("button")
 
-    liPizza.classList.add("list-group-item", "list-group-item-success", "p-2", "d-flex", "position-relative", "align-sm-items-center", "d-md-inline-block", "col-md-6", "rounded", "mx-md-0.5", "my-md-2");
+    liPizza.classList.add("list-group-item", "list-group-item-success", "p-2", "d-flex", "position-relative", "align-sm-items-center", "d-md-inline-block", "col-md-5", "rounded", "mx-md-2", "my-md-2");
     imgPizza.classList.add("p-1", "mt-2", "w-25", "h-25");
     imgPizza.setAttribute("src", data.image);
     imgPizza.setAttribute("alt", `pizza ${data.nom}`);
