@@ -96,15 +96,26 @@ function addCommande(event) {
         for (let i = 0; i < pizzas.length; i++) {
             if (pizzas[i].nom == event.target.previousSibling.previousSibling.firstChild.textContent) {
                 const count = document.getElementsByClassName("count")[i];
-                let countPizza = count.textContent;
+                let countPizza = parseInt(count.textContent);
                 let prixPizzas = pizzas[i].prix * countPizza;
-                nbPizza.textContent = Number(nbPizza.textContent) + Number(count.textContent);
-                commandePizza.push({
-                    nom: pizzas[i].nom,
-                    prix: pizzas[i].prix,
-                    nombre: count.textContent,
-                    prixtotal: prixPizzas
-                })
+                nbPizza.textContent = Number(nbPizza.textContent) + countPizza;
+
+                // Vérifier si la pizza existe déjà dans la commande
+                let pizzaExistante = commandePizza.find(pizza => pizza.nom === pizzas[i].nom);
+
+                if (pizzaExistante) {
+                    // Si la pizza existe déjà, incrémenter les valeurs
+                    pizzaExistante.nombre = parseInt(pizzaExistante.nombre) + countPizza;
+                    pizzaExistante.prixtotal += prixPizzas;
+                } else {
+                    // Sinon, ajouter la pizza à la commande
+                    commandePizza.push({
+                        nom: pizzas[i].nom,
+                        prix: pizzas[i].prix,
+                        nombre: countPizza,
+                        prixtotal: prixPizzas
+                    });
+                }
             }
         }
     }
