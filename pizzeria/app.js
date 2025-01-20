@@ -27,6 +27,9 @@ const commande = document.getElementById("commande");
 export const containerPizza = document.getElementById("main");
 export let commandePizza = [];
 let nbPizza = document.getElementsByClassName("nb-pizza")[0];
+if (nbPizza.textContent === "") {
+    nbPizza.classList.add("d-none");
+}
 
 
 //affichage initiale des pizza
@@ -113,6 +116,7 @@ function displayPizza(data) {
 function addPizza(event) {
     if (event.target.classList.contains("bi-plus-circle")) {
         event.target.previousSibling.textContent++;
+        nbPizza.classList.remove("d-none");
     }
     if (event.target.classList.contains("bi-dash-circle")) {
         event.target.nextSibling.textContent--;
