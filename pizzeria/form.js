@@ -4,6 +4,10 @@ export let infoClient = [];
 
 import { containerPizza, commandePizza } from "./app.js"
 
+//TODO : ajouter les informations de la commande dans le fichier json pizza + client
+//TODO : ajoute date et heure de la commande
+//TODO : ajoute mode de récupération de la commande
+
 // affiche le formulaire de commande final
 export function afficheForm(event) {
     if (event.target.classList.contains("commande")) {

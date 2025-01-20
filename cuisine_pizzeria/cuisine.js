@@ -1,5 +1,5 @@
 "use strict"
-
+// TODO refaire la vue cuisine cf maquette
 // recupère les commandes validé
 async function recupereCommande() {
     try {
@@ -28,7 +28,7 @@ function afficheCommande(data) {
     const idCard = document.createElement("p");
     const btnEtat = document.createElement("button");
 
-    divCard.classList.add("card", "col-md-4", "mb-3");
+    divCard.classList.add("card", "col-md-3", "m-1");
     cardBody.classList.add("card-body");
     nomClient.classList.add("card-title");
     phoneClient.classList.add("card-text", "fw-semibold");
@@ -95,7 +95,7 @@ function changerEtat(event) {
                 const idCard = document.createElement("p");
                 const btnEtat = document.createElement("button");
 
-                divCard.classList.add("card", "col-md-4", "mb-3");
+                divCard.classList.add("card", "col-md-3", "m-1");
                 cardBody.classList.add("card-body");
                 nomClient.classList.add("card-title");
                 phoneClient.classList.add("card-text", "fw-semibold");
