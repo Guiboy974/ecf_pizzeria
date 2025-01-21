@@ -116,7 +116,7 @@ function displayPizza(data) {
 function addPizza(event) {
     if (event.target.classList.contains("bi-plus-circle")) {
         event.target.previousSibling.textContent++;
-        nbPizza.classList.remove("d-none");
+        
     }
     if (event.target.classList.contains("bi-dash-circle")) {
         event.target.nextSibling.textContent--;
@@ -134,6 +134,7 @@ function addCommande(event) {
                 const count = document.getElementsByClassName("count")[i];
                 let countPizza = parseInt(count.textContent);
                 let prixPizzas = pizzas[i].prix * countPizza;
+                nbPizza.classList.remove("d-none");
                 nbPizza.textContent = Number(nbPizza.textContent) + countPizza;
 
                 // Vérifier si la pizza existe déjà dans la commande
