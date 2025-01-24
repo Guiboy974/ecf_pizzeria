@@ -28,7 +28,7 @@ function afficheCommande(data) {
     const idCard = document.createElement("p");
     const btnEtat = document.createElement("button");
 
-    divCard.classList.add("card", "col-md-3", "m-1");
+    divCard.classList.add("card", "col-md-2", "m-1");
     cardBody.classList.add("card-body");
     nomClient.classList.add("card-title");
     phoneClient.classList.add("card-text", "fw-semibold");
