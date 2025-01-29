@@ -1,5 +1,6 @@
 [
     {
+        "mode": "Emporté",
         "id": 1,
         "date": "2021-06-01",
         "heure": "12:00",
@@ -21,6 +22,8 @@
         ]
     },
     {
+        "mode": "livraison",
+        "id": 2,
         "client": "nom2",
         "telephone": "0746464646",
         "adresse": "12 rue de chez oim",
@@ -32,10 +35,11 @@
                 "prix": 9,
                 "prixtotal": 18
             }
-        ],
-        "id": 2
+        ]
     },
     {
+        "mode": "Emporté",
+        "id": 3,
         "client": "nom",
         "telephone": "0646464646",
         "commande": [
@@ -51,10 +55,11 @@
                 "prix": 10,
                 "prixtotal": 1
             }
-        ],
-        "id": 3
+        ]
     },
     {
+        "mode": "Emporté",
+        "id": 4,
         "client": "nom",
         "telephone": "0646464646",
         "commande": [
@@ -70,7 +75,6 @@
                 "prix": 10,
                 "prixtotal": 1
             }
-        ],
-        "id": 3
+        ]
     }
 ]
