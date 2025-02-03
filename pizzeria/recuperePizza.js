@@ -1,20 +1,13 @@
 // recupère et utilise les données json des pizzas
 export async function recuperePizza() {
     try {
-        const listJson = await Promise.all([
-            fetch('../margherita.json'),
-            fetch('../reine.json'),
-            fetch('../dijo.json'),
-            fetch('../4fromage.json'),
-            fetch('../montagnard.json'),
-            fetch('../carbonara.json')
-        ]);
-
-        const data = await Promise.all(
-            listJson.map(res => res.json()),
-        );
-        return data
+        const response = await fetch('http://localhost/ECF/pizzeria/test.php');
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        const data = await response.json();
+        return data;
     } catch (error) {
-        console.log(error);
+        console.error('There has been a problem with your fetch operation:', error);
     }
 }

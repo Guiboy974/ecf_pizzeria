@@ -20,6 +20,8 @@ import { recuperePizza } from "./recuperePizza.js";
 import { afficheForm, controleForm, infoClient } from "./form.js"
 
 const pizzas = await recuperePizza();
+console.log(pizzas);
+
 
 const ulPizza = document.getElementById("list-pizza");
 const filtre = document.getElementById("select-filtre");
@@ -71,12 +73,12 @@ function displayPizza(data) {
 
     liPizza.classList.add("list-group-item", "list-group-item-success", "p-2", "d-flex", "position-relative", "align-sm-items-center", "d-md-inline-block", "col-md-5", "rounded", "mx-md-2", "my-md-2");
     imgPizza.classList.add("p-1", "mt-2", "w-25", "h-25");
-    imgPizza.setAttribute("src", data.image);
-    imgPizza.setAttribute("alt", `pizza ${data.nom}`);
+    imgPizza.setAttribute("src", data.img_pizza);
+    imgPizza.setAttribute("alt", `pizza ${data.nom_pizza}`);
     divText.classList.add("mt-2", "mx-sm-2");
     divCount.classList.add("fs-5", "fw-semibold", "position-absolute", "top-0", "end-0");
     nomPizza.classList.add("m-0");
-    nomPizza.textContent = data.nom;
+    nomPizza.textContent = data.nom_pizza;
     ingredients.classList.add("m-0", "fs-6", "text-wrap");
     ingredients.textContent = data.ingredients;
     prix.classList.add("mb-4", "mb-md-2", "fw-semibold");
