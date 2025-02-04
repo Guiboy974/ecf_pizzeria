@@ -25,17 +25,29 @@ class DaoController implements DaoInterface
             $db = ConnectBDD::getInstance();
 
             // Check if email already exists
-            $checkQuery = $db->prepare("SELECT COUNT(*) FROM users WHERE usermail = :email");
+            $checkQuery = $db->prepare("SELECT COUNT(*) FROM client WHERE email_client = :email");
             $checkQuery->execute([':email' => $user->getEmail()]);
             $emailExists = $checkQuery->fetchColumn();
 
             if ($emailExists) {
                 throw new \Exception("User email already exists.");
+            } else {
+                // insert nouvelle utilisateur
+                //TODO re check enregistrement
+                $query = $db->prepare("INSERT INTO client (nom_client, prenom_client, adresse_client, telephone_client, email_client, mot_de_passe_client) VALUES (:nom, :prenom, :adresse, :telephone, :email, :password)");
+                $query->execute(
+                    [
+                        ':nom' => $user->getName(),
+                        ':prenom' => $user->getPrenom(),
+                        ':adresse' => $user->getAdresse(),
+                        ':telephone' => $user->getTelephone(),
+                        ':email' => $user->getEmail(),
+                        ':password' => $user->getPassword()
+                    ]
+                );
+                $id = $db->lastInsertId();
+                $user->setId($id);
             }
-            $query = $db->prepare("INSERT INTO users (username, password, usermail) VALUES (:username, :password, :email)");
-            $query->execute([':username' => $user->getUsername(), ':password' => $user->getPassword(), ':email' => $user->getEmail()]);
-            $id = $db->lastInsertId();
-            $user->setId($id);
             return true;
 
         } catch (PDOException $exc) {
@@ -85,19 +97,29 @@ class DaoController implements DaoInterface
      * @param mixed $password
      * @return void
      */
-    public function login($username, $password)
+    public function login($mail, $password)
     {
         try {
             $db = ConnectBDD::getInstance();
-            $query = $db->prepare("SELECT * FROM users WHERE username = :username");
-            $query->bindParam(':username', $username);
+            $query = $db->prepare("SELECT * FROM client WHERE email_client = :email");
+            $query->bindParam(':email', $mail);
             $query->execute();
             $user = $query->fetch(PDO::FETCH_ASSOC);
 
             if ($user && password_verify($password, $user['password'])) {
                 $entity = new UserEntity();
-                $entity->setUsername($user['username']);
+                $entity->setName($user['nom_client']);
+                $entity->setPrenom($user['prenom_client']);
+                $entity->setAdresse($user['adresse_client']);
+                $entity->setTelephone($user['telephone_client']);
+                $entity->setEmail($user['email_client']);
+                $entity->setPassword($user['mot_de_passe_client']);
+                $entity->setId($user['id_client']);
+
+                session_start();
+                $_SESSION['user'] = $entity;
             }
+            
 
         } catch (PDOException $exc) {
             exit($exc->getMessage());
@@ -107,6 +129,7 @@ class DaoController implements DaoInterface
     public function readAllPizzas(): array
     {
         try {
+            //TODO finir ajout image
             $db = ConnectBDD::getInstance();
             $stmt = $db->query("SELECT pizza.nom_pizza, pizza.prix_pizza, base.nom_base, GROUP_CONCAT(ingredient.nom_ingredient SEPARATOR ', ') as ingredients 
                     FROM pizza
@@ -119,6 +142,7 @@ class DaoController implements DaoInterface
             exit($exc->getMessage());
         }
     }
-
+    
 }
 
+// JOIN image ON image.id_pizza = pizza.id_pizza 

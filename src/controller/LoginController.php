@@ -3,6 +3,7 @@ namespace App\controller;
 
 use App\controller\ControllerInterface;
 use App\model\DaoController;
+use App\model\UserEntity;
 
 class LoginController implements ControllerInterface {
     private $users;
@@ -12,6 +13,7 @@ class LoginController implements ControllerInterface {
     }
 
     public function doGet() {
+
         require_once 'template/login.php';
     }
     
@@ -21,17 +23,17 @@ class LoginController implements ControllerInterface {
      * @return void
      */
     public function doPost() { 
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        
-        $user = new DaoController();
-        $user->login($username, $password);
 
-        if ($user) {
-            session_start();
-            $_SESSION['user'] = $username;
+        //FIXME correction et controle login
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+    
+        $daoController = new DaoController();
+        $userEntity = $daoController->login($email, $password);
+    
+        if ($userEntity) {
+            $_SESSION['username'] = $_SESSION['user']->getName();
             require 'template/home.php';
-            
         } else {
             header('Location: index.php?action=login');
         }

@@ -29,14 +29,20 @@ class RegisterController implements ControllerInterface
     public function doPost()
     {
 
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        $username = $_POST['nom'];
+        $prenom = $_POST['prenom'];
+        $adresse = $_POST['adresse'];
+        $telephone = $_POST['telephone'];
         $email = $_POST['email'];
+        $password = $_POST['password'];
 
         $user = new UserEntity();
-        $user->setUsername($username);
-        $user->setPassword($password);
+        $user->setName($username);
+        $user->setPrenom($prenom);
+        $user->setAdresse($adresse);
+        $user->setTelephone($telephone);
         $user->setEmail($email);
+        $user->setPassword($password);
 
         $createUser = new DaoController();
         $createUser->create($user);
@@ -44,6 +50,7 @@ class RegisterController implements ControllerInterface
         if ($createUser->create($user)) {
             session_start();
             $_SESSION['user'] = $username;
+            $_SESSION['prenom'] = $prenom;
             require 'template/home.php';
         } else {
             echo '<p>Echec de l\'inscription, veuillez rééssayer.</p>';

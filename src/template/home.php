@@ -2,7 +2,7 @@
 
 ob_start(); ?>
 
-<h1>Bienvenue sur mon site</h1>
+<h1>Bienvenue A la Casa Di Jo!</h1>
 
 <?php if (isset($_SESSION['user'])) : ?>
     <p>Bonjour <?= $_SESSION['user']?></p>
