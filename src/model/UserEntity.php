@@ -2,12 +2,15 @@
 namespace App\model;
 
 use App\model\EntityInterface;
+use App\model\DaoController;
 
  class UserEntity implements EntityInterface {
     private $id;
     private $username;
     private $password;
     private $email;
+
+    private $pizzas;
     
 
      /**
@@ -91,4 +94,13 @@ use App\model\EntityInterface;
     }
 
 
+
+    /**
+     * Get the value of pizzas
+     */ 
+    public function getPizzas()
+    {
+        $this->pizzas = new DaoController;
+        return $this->pizzas->readAllPizzas();
+    }
  }

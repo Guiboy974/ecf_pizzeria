@@ -9,7 +9,7 @@ use App\ConnectBDD;
 use App\model\UserEntity;
 
 //FIXME changer le nom de la table par users
-class UserController implements DaoInterface
+class DaoController implements DaoInterface
 {
 
     /**
@@ -53,7 +53,7 @@ class UserController implements DaoInterface
     {
         try {
             $db = ConnectBDD::getInstance();
-            $stmt = $db->query("SELECT * from Membres");
+            $stmt = $db->query("SELECT * from utilisateurs");
             return $stmt->fetchAll();
         } catch (PDOException $exc) {
             exit($exc->getMessage());
@@ -104,4 +104,21 @@ class UserController implements DaoInterface
         }
     }
 
+    public function readAllPizzas(): array
+    {
+        try {
+            $db = ConnectBDD::getInstance();
+            $stmt = $db->query("SELECT pizza.nom_pizza, pizza.prix_pizza, base.nom_base, GROUP_CONCAT(ingredient.nom_ingredient SEPARATOR ', ') as ingredients 
+                    FROM pizza
+                    JOIN base ON base.id_base = pizza.id_base
+                    JOIN compose ON compose.id_pizza = pizza.id_pizza
+                    JOIN ingredient ON ingredient.id_ingredient = compose.id_ingredient
+                    GROUP BY pizza.nom_pizza, pizza.prix_pizza, base.nom_base");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $exc) {
+            exit($exc->getMessage());
+        }
+    }
+
 }
+

@@ -2,7 +2,7 @@
 namespace App\controller;
 
 use App\controller\ControllerInterface;
-use App\model\UserController;
+use App\model\DaoController;
 use App\model\UserEntity;
 
 class RegisterController implements ControllerInterface
@@ -38,7 +38,7 @@ class RegisterController implements ControllerInterface
         $user->setPassword($password);
         $user->setEmail($email);
 
-        $createUser = new UserController();
+        $createUser = new DaoController();
         $createUser->create($user);
 
         if ($createUser->create($user)) {

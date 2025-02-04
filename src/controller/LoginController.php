@@ -2,7 +2,7 @@
 namespace App\controller;
 
 use App\controller\ControllerInterface;
-use App\model\UserController;
+use App\model\DaoController;
 
 class LoginController implements ControllerInterface {
     private $users;
@@ -24,7 +24,7 @@ class LoginController implements ControllerInterface {
         $username = $_POST['username'];
         $password = $_POST['password'];
         
-        $user = new UserController();
+        $user = new DaoController();
         $user->login($username, $password);
 
         if ($user) {

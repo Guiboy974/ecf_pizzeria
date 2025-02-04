@@ -1,28 +1,33 @@
-
-    <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="index.php">Mon Site</a>
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
+<header>
+        <picture><img class="img-fluid mx-auto d-block" src="../images/emotionheader.jpg"
+                alt="logo casa di jo, pizza aux feux de bois">
+        </picture>
+        <nav class="navbar navbar-expand-lg bg-success-subtle d-flex justify-content-center fw-medium">
+            <div class="me-auto">
+                <button class="navbar-toggler m-1" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item m-1">
+                            <a class="nav-link text-dark" href="index.php">Accueil</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="secret">Secret ;)</a>
+                        <li class="nav-item m-1">
+                            <a class="nav-link text-dark" aria-current="page" href="index.php?action=pizzas">Nos Pizzas</a>
+                        </li>
+                        <li class="nav-item m-1">
+                            <a class="nav-link text-dark" href="#">Nous contacter</a>
                         </li>
                     </ul>
                 </div>
+            </div>
+            <div class="me-2 text-dark">
+                <i class="bi bi-cart4 p-1 position-relative" id="commande"><a href="index.php?action=commande"><span
+                    class="position-absolute top-0 start-100 translate-middle p-1 bg-danger text-white border border-light rounded-circle nb-pizza"></span>
+                </a></i>
+                <i class="bi bi-person-circle p-1"></i>
             </div>
         </nav>
     </header>

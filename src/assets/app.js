@@ -45,7 +45,7 @@ function filtrerPizza(event) {
             case "1":
                 return pizzas.nom_base === "tomate";
             case "2":
-                return pizzas.nom_base === "crème";
+                return pizzas.nom_base === "crême";
             default:
                 return true; // affiche toutes les pizzas
         }
@@ -82,12 +82,12 @@ function displayPizza(data) {
     ingredients.classList.add("m-0", "fs-6", "text-wrap");
     ingredients.textContent = data.ingredients;
     prix.classList.add("mb-4", "mb-md-2", "fw-semibold");
-    prix.textContent = `Prix : ${data.prix_pizza} €`;
+    prix.textContent = `Prix : ${Number(data.prix_pizza).toFixed(2)} €`;
     pCount.innerHTML = '<p class="d-flex p-sm-2 m-1"><i class="bi bi-dash-circle mx-1"></i><span class="count">0</span><i class="bi bi-plus-circle mx-1"></i></p>';
     btnAdd.classList.add("btn", "btn-success", "m-1", "position-absolute", "bottom-0", "end-0");
     btnAdd.textContent = "Ajouter";
 
-    // Ajout des attributs Bootstrap pour le popovers
+    // Ajout des attributs Bootstrap pour le popover
     btnAdd.setAttribute("data-bs-container", "body");
     btnAdd.setAttribute("data-bs-toggle", "popover");
     btnAdd.setAttribute("data-bs-placement", "top");
@@ -132,15 +132,15 @@ function addPizza(event) {
 function addCommande(event) {
     if (event.target.tagName === "BUTTON") {
         for (let i = 0; i < pizzas.length; i++) {
-            if (pizzas[i].nom == event.target.previousSibling.previousSibling.firstChild.textContent) {
+            if (pizzas[i].nom_pizza == event.target.previousSibling.previousSibling.firstChild.textContent) {
                 const count = document.getElementsByClassName("count")[i];
                 let countPizza = parseInt(count.textContent);
-                let prixPizzas = pizzas[i].prix * countPizza;
+                let prixPizzas = pizzas[i].prix_pizza * countPizza;
                 nbPizza.classList.remove("d-none");
                 nbPizza.textContent = Number(nbPizza.textContent) + countPizza;
 
                 // Vérifier si la pizza existe déjà dans la commande
-                let pizzaExistante = commandePizza.find(pizza => pizza.nom === pizzas[i].nom);
+                let pizzaExistante = commandePizza.find(pizza => pizza.nom_pizza === pizzas[i].nom_piza);
 
                 if (pizzaExistante) {
                     // Si la pizza existe déjà, incrémenter les valeurs
@@ -149,8 +149,8 @@ function addCommande(event) {
                 } else {
                     // Sinon, ajouter la pizza à la commande
                     commandePizza.push({
-                        nom: pizzas[i].nom,
-                        prix: pizzas[i].prix,
+                        nom: pizzas[i].nom_pizza,
+                        prix: pizzas[i].prix_pizza,
                         nombre: countPizza,
                         prixtotal: prixPizzas
                     });

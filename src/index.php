@@ -11,6 +11,7 @@ use App\controller\HomeController;
 use App\controller\LoginController;
 use App\controller\LogoutController;
 use App\controller\RegisterController;
+use App\controller\PizzaController;
 
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -29,7 +30,8 @@ switch ($action) {
     case 'logout':
         $controller = new LogoutController();
         break;
-    case 'secret':
+    case 'pizzas':
+        $controller = new PizzaController();
         break;
     default:
         # code...
