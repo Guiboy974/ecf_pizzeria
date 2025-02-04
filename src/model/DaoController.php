@@ -48,7 +48,7 @@ class DaoController implements DaoInterface
                 $id = $db->lastInsertId();
                 $user->setId($id);
             }
-            return true;
+            exit();
 
         } catch (PDOException $exc) {
             exit($exc->getMessage());
