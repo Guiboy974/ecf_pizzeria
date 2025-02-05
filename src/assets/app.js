@@ -33,7 +33,26 @@ if (nbPizza.textContent === "") {
     nbPizza.classList.add("d-none");
 }
 
+// Sauvegarde la commande dans le localStorage
+function saveCommande() {
+    localStorage.setItem('commandePizza', JSON.stringify(commandePizza));
+}
 
+// Charge la commande depuis le localStorage
+function loadCommandeFromLocalStorage() {
+    const savedCommande = localStorage.getItem('commandePizza');
+    if (savedCommande) {
+        commandePizza = JSON.parse(savedCommande);
+        nbPizza.textContent = commandePizza.reduce((total, pizza) => total + pizza.nombre, 0);
+        if (nbPizza.textContent > 0) {
+            nbPizza.classList.remove("d-none");
+        }
+    }
+}
+
+// Charger la commande au démarrage
+loadCommandeFromLocalStorage();
+ 
 //affichage initiale des pizza
 pizzas.forEach(pizzas => displayPizza(pizzas));
 
@@ -82,7 +101,7 @@ function displayPizza(data) {
     ingredients.classList.add("m-0", "fs-6", "text-wrap");
     ingredients.textContent = data.ingredients;
     prix.classList.add("mb-4", "mb-md-2", "fw-semibold");
-    prix.textContent = `Prix : ${Number(data.prix_pizza).toFixed(2)} €`;
+    prix.textContent = `Prix : ${parseFloat(data.prix_pizza)} €`;
     pCount.innerHTML = '<p class="d-flex p-sm-2 m-1"><i class="bi bi-dash-circle mx-1"></i><span class="count">0</span><i class="bi bi-plus-circle mx-1"></i></p>';
     btnAdd.classList.add("btn", "btn-success", "m-1", "position-absolute", "bottom-0", "end-0");
     btnAdd.textContent = "Ajouter";
@@ -133,6 +152,8 @@ function addCommande(event) {
     if (event.target.tagName === "BUTTON") {
         for (let i = 0; i < pizzas.length; i++) {
             if (pizzas[i].nom_pizza == event.target.previousSibling.previousSibling.firstChild.textContent) {
+                console.log(event.target.previousSibling.previousSibling.firstChild.textContent);
+                
                 const count = document.getElementsByClassName("count")[i];
                 let countPizza = parseInt(count.textContent);
                 let prixPizzas = pizzas[i].prix_pizza * countPizza;
@@ -140,7 +161,7 @@ function addCommande(event) {
                 nbPizza.textContent = Number(nbPizza.textContent) + countPizza;
 
                 // Vérifier si la pizza existe déjà dans la commande
-                let pizzaExistante = commandePizza.find(pizza => pizza.nom_pizza === pizzas[i].nom_piza);
+                let pizzaExistante = commandePizza.find(pizza => pizza.nom_pizza === pizzas[i].nom_pizza);
 
                 if (pizzaExistante) {
                     // Si la pizza existe déjà, incrémenter les valeurs
@@ -150,10 +171,11 @@ function addCommande(event) {
                     // Sinon, ajouter la pizza à la commande
                     commandePizza.push({
                         nom: pizzas[i].nom_pizza,
-                        prix: pizzas[i].prix_pizza,
+                        prix: parseFloat(pizzas[i].prix_pizza),
                         nombre: countPizza,
                         prixtotal: prixPizzas
                     });
+                    saveCommande();
                 }
             }
         }
@@ -218,7 +240,7 @@ function modifieCommande(event) {
         for (let i = 0; i < commandePizza.length; i++) {
             if (commandePizza[i].nom == event.target.parentElement.parentElement.parentElement.firstChild.textContent) {
                 commandePizza[i].nombre++;
-                commandePizza[i].prixtotal += commandePizza[i].prix;
+                commandePizza[i].prixtotal += parseFloat(commandePizza[i].prix);
                 nbPizza.textContent++;
 
                 afficheCommande()
@@ -249,6 +271,7 @@ function modifieCommande(event) {
             afficheCommande();
         }
     }
+    saveCommande();
 }
 
 //affiche validation de commande 

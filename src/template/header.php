@@ -10,7 +10,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ms-3">
                     <li class="nav-item m-1">
                         <a class="nav-link text-dark" href="index.php">Accueil</a>
                     </li>
@@ -23,8 +23,8 @@
                 </ul>
             </div>
         </div>
-        <div class="me-2">
-            <a class="link-dark text-decoration-none" href="index.php?action=commande">
+        <div class="me-3">
+            <a class="link-dark text-decoration-none m-2">
                 <i class="bi bi-cart4 p-1 position-relative" id="commande">
                     <span
                         class="position-absolute top-0 start-100 translate-middle p-1 bg-danger text-white border border-light rounded-circle nb-pizza"></span>

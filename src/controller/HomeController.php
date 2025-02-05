@@ -15,6 +15,7 @@ class HomeController implements ControllerInterface
     public function doGet()
     {
         //TODO Ajouter le code pour afficher la page d'accueil
+        session_start();
         require_once 'template/home.php';
         
     }

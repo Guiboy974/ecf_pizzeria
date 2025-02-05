@@ -13,7 +13,7 @@ class LoginController implements ControllerInterface {
     }
 
     public function doGet() {
-
+        session_start();
         require_once 'template/login.php';
     }
     
@@ -32,10 +32,12 @@ class LoginController implements ControllerInterface {
         $userEntity = $daoController->login($email, $password);
     
         if ($userEntity) {
-            $_SESSION['username'] = $_SESSION['user']->getName();
+            session_start();
+            $_SESSION['username'] = $_SESSION['user']->getPrenom();
             require 'template/home.php';
         } else {
-            header('Location: index.php?action=login');
+            echo 'nok';
+            // header('Location: index.php?action=login');
         }
     }
 

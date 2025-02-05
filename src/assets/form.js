@@ -6,13 +6,36 @@ import { containerPizza, commandePizza } from "./app.js"
 
 //TODO : ajouter les informations de la commande dans le fichier json pizza + client
 //TODO : ajoute date et heure de la commande
-//TODO : ajoute mode de récupération de la commande
+
+async function getClientData() {
+    try {
+        const response = await fetch('http://localhost/ECF/src/controller/ClientController.php', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        const userData = await response.json();
+        return userData
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+    }
+}
+// Appeler la fonction pour récupérer les données de l'utilisateur
+
+const dataClient = await getClientData();
+console.log(dataClient);
+
+
 
 // affiche le formulaire de commande final
 export function afficheForm(event) {
     if (event.target.classList.contains("commande")) {
-        
-         //vérifie si la commande est vide avant chargement du formulaire
+
+        //vérifie si la commande est vide avant chargement du formulaire
         if (commandePizza.length === 0) {
             const divAlert = document.createElement("div");
             divAlert.innerHTML = "";
@@ -47,27 +70,18 @@ export function afficheForm(event) {
             const divNom = document.createElement("div");
             const divPhone = document.createElement("div");
             const divAdresseP = document.createElement("div");
-            const divAdresseS = document.createElement("div");
-            const divCodeP = document.createElement("div");
-            const divVille = document.createElement("div");
             const divPayer = document.createElement("div");
 
             fielsetInput.classList.add("row", "g-3", "mt-md-2");
             divNom.classList.add("col-md-6");
             divPhone.classList.add("col-md-6");
             divAdresseP.classList.add("col-md-12");
-            divAdresseS.classList.add("col-md-12");
-            divCodeP.classList.add("col-md-2");
-            divVille.classList.add("col-md-6");
             divPayer.classList.add("col-12", "mt-3");
 
             form.appendChild(fielsetInput);
             fielsetInput.appendChild(divNom);
             fielsetInput.appendChild(divPhone);
             fielsetInput.appendChild(divAdresseP);
-            fielsetInput.appendChild(divAdresseS);
-            fielsetInput.appendChild(divCodeP);
-            fielsetInput.appendChild(divVille);
             fielsetInput.appendChild(divPayer);
 
             //input nom
@@ -107,42 +121,6 @@ export function afficheForm(event) {
             divAdresseP.appendChild(labelAdresse);
             divAdresseP.appendChild(inputAdresse);
 
-            //input adresse suite
-            const labelAdresseS = document.createElement("label");
-            const inputAdresseS = document.createElement("input");
-            labelAdresseS.textContent = "Adresse complément";
-            labelAdresseS.setAttribute("for", "inputAdresse2");
-            inputAdresseS.classList.add("form-control");
-            inputAdresseS.setAttribute("id", "inputAdresse2");
-            inputAdresseS.setAttribute("type", "text");
-            inputAdresseS.setAttribute("placeholder", "Appartement, étage, ...")
-            divAdresseS.appendChild(labelAdresseS);
-            divAdresseS.appendChild(inputAdresseS);
-
-            //input code postal
-            const labelCodeP = document.createElement("label");
-            const inputCodeP = document.createElement("input");
-            labelCodeP.textContent = "Code postal";
-            labelCodeP.classList.add("form-label");
-            labelCodeP.setAttribute("for", "inputCodeP");
-            inputCodeP.classList.add("form-control");
-            inputCodeP.setAttribute("id", "inputCodeP");
-            inputCodeP.setAttribute("type", "number");
-            divCodeP.appendChild(labelCodeP);
-            divCodeP.appendChild(inputCodeP);
-
-            //input ville
-            const labelVille = document.createElement("label");
-            const inputVille = document.createElement("input");
-            labelVille.textContent = "Ville";
-            labelVille.classList.add("form-label");
-            labelVille.setAttribute("for", "inputVille");
-            inputVille.classList.add("form-control");
-            inputVille.setAttribute("id", "inputVille");
-            inputVille.setAttribute("type", "text");
-            divVille.appendChild(labelVille);
-            divVille.appendChild(inputVille);
-
             //bouton Payer
             const btnPayer = document.createElement("button")
             btnPayer.textContent = "Payer";
@@ -156,14 +134,10 @@ export function afficheForm(event) {
             fielsetRadio.addEventListener("click", () => {
                 if (radioEmporte.checked === true) {
                     inputAdresse.setAttribute("disabled", true)
-                    inputAdresseS.setAttribute("disabled", true)
-                    inputCodeP.setAttribute("disabled", true)
-                    inputVille.setAttribute("disabled", true)
+
                 } else if (radioLivraison.checked === true) {
                     inputAdresse.removeAttribute("disabled")
-                    inputAdresseS.removeAttribute("disabled")
-                    inputCodeP.removeAttribute("disabled")
-                    inputVille.removeAttribute("disabled")
+
                 }
             })
 
@@ -179,10 +153,6 @@ export function controleForm(event) {
     const inputNom = document.getElementById("inputNom");
     const inputPhone = document.getElementById("inputPhone");
     const inputAdresse = document.getElementById("inputAdresse");
-    const inputAdresseS = document.getElementById("inputAdresse2")
-    const inputCodeP = document.getElementById("inputCodeP");
-    const inputVille = document.getElementById("inputVille");
-
 
     if (event.target.classList.contains("payer")) {
 
@@ -194,9 +164,7 @@ export function controleForm(event) {
 
         const regexText = new RegExp(/[a-zA-Z]{3,}/g);
         const regexTel = new RegExp(/[0-9]{10,}/g);
-        const regexAdresse = new RegExp(/^\d+\s+[a-zA-ZÀ-ÿ\s-]+$/);
-        const regexZip = new RegExp(/[0-9]{5,}/g);
-        const regexVille = new RegExp(/[a-zA-Z]{3,}/g);
+        const regexAdresse = new RegExp("^\\d+\\s+[a-zA-ZÀ-ÿ\\s-]+\\s+\\d{5}\\s+[a-zA-ZÀ-ÿ\\s-]+$");
 
         if (regexText.test(inputNom.value)) {
             if (regexTel.test(inputPhone.value)) {
@@ -207,31 +175,17 @@ export function controleForm(event) {
                     if (regexAdresse.test(inputAdresse.value)) {
                         inputAdresse.classList.remove("is-invalid");
 
-                        if (regexZip.test(inputCodeP.value)) {
-                            inputCodeP.classList.remove("is-invalid");
+                        //ajoute toute les informations de livraison
+                        infoClient.push({
+                            client: inputNom.value,
+                            telephone: inputPhone.value,
+                            adresse: inputAdresse.value,
+                            recuperation: "Livraison"
+                        })
 
-                            if (regexVille.test(inputVille.value)) {
-                                
-                                //ajoute toute les informations de livraison
-                                infoClient.push({
-                                    client: inputNom.value,
-                                    telephone: inputPhone.value,
-                                    adresse: `${inputAdresse.value} ${inputAdresseS.value}`,
-                                    adresseZip: `${inputCodeP.value} ${inputVille.value}`
-                                })
+                        console.log(infoClient);
+                        inputVille.classList.remove("is-invalid");
 
-                                console.log(infoClient);
-                                inputVille.classList.remove("is-invalid");
-
-                            } else {
-                                inputVille.value = "";
-                                console.log(inputVille.value);
-                                inputVille.classList.add("is-invalid");
-                            }
-                        } else {
-                            inputCodeP.value = "";
-                            inputCodeP.classList.add("is-invalid");
-                        }
                     } else {
                         inputAdresse.value = "";
                         inputAdresse.classList.add("is-invalid");
@@ -245,7 +199,8 @@ export function controleForm(event) {
                 // ajoute des nom et numéro a la commande uniquement si a emporté
                 infoClient.push({
                     client: inputNom.value,
-                    telephone: inputPhone.value
+                    telephone: inputPhone.value,
+                    recuperation: "Emporté"
                 })
 
             } else {

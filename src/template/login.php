@@ -1,12 +1,20 @@
 <?php
+
 ob_start(); 
 ?>
 <?php if (isset($_SESSION['user'])) : ?>
-    <h2 class="m-2">Bienvenue, <?php echo htmlspecialchars($_SESSION['user']->getName()); ?>!</h2>
-    <p>Prénom: <?php echo htmlspecialchars($_SESSION['user']->getPrenom()); ?></p>
-    <p>Adresse: <?php echo htmlspecialchars($_SESSION['user']->getAdresse()); ?></p>
-    <p>Téléphone: <?php echo htmlspecialchars($_SESSION['user']->getTelephone()); ?></p>
-    <p>Email: <?php echo htmlspecialchars($_SESSION['user']->getEmail()); ?></p>
+   
+    <?php $user = $_SESSION['user']; ?>
+    <h2 class="m-2">Bienvenue, <?php echo htmlspecialchars($user->getPrenom()); ?>!</h2>
+    <p>Nom: <?php echo htmlspecialchars($user->getName()); ?></p>
+    <p>Adresse: <?php echo htmlspecialchars($user->getAdresse()); ?></p>
+    <p>Téléphone: <?php echo htmlspecialchars($user->getTelephone()); ?></p>
+    <p>Email: <?php echo htmlspecialchars($user->getEmail()); ?></p>
+
+    <form action="index.php?action=logout">
+
+        <button class="btn btn-success" type="submit">se déconnecter</button>
+    </form>
    
 <?php endif ?>
 

@@ -24,14 +24,14 @@ class DaoController implements DaoInterface
         try {
             $db = ConnectBDD::getInstance();
 
-            // Check if email already exists
-            $checkQuery = $db->prepare("SELECT COUNT(*) FROM client WHERE email_client = :email");
-            $checkQuery->execute([':email' => $user->getEmail()]);
-            $emailExists = $checkQuery->fetchColumn();
+            // FIXME Check if email already exists
+            // $checkQuery = $db->prepare("SELECT COUNT(*) FROM client WHERE email_client = :email");
+            // $checkQuery->execute([':email' => $user->getEmail()]);
+            // $emailExists = $checkQuery->fetchColumn();
 
-            if ($emailExists) {
-                throw new \Exception("User email already exists.");
-            } else {
+            // if ($emailExists) {
+            //     throw new \Exception("User email already exists.");
+            // } else {}
                 // insert nouvelle utilisateur
                 //TODO re check enregistrement
                 $query = $db->prepare("INSERT INTO client (nom_client, prenom_client, adresse_client, telephone_client, email_client, mot_de_passe_client) VALUES (:nom, :prenom, :adresse, :telephone, :email, :password)");
@@ -47,8 +47,8 @@ class DaoController implements DaoInterface
                 );
                 $id = $db->lastInsertId();
                 $user->setId($id);
-            }
-            exit();
+                return true;
+          
 
         } catch (PDOException $exc) {
             exit($exc->getMessage());
@@ -93,20 +93,20 @@ class DaoController implements DaoInterface
 
     /**
      * fait la connexion de l'utilisateur à la base de données
-     * @param mixed $username
+     * @param mixed $email
      * @param mixed $password
-     * @return void
+     * @return 
      */
-    public function login($mail, $password)
+    public function login($email, $password)
     {
         try {
             $db = ConnectBDD::getInstance();
             $query = $db->prepare("SELECT * FROM client WHERE email_client = :email");
-            $query->bindParam(':email', $mail);
+            $query->bindParam(':email', $email);
             $query->execute();
             $user = $query->fetch(PDO::FETCH_ASSOC);
 
-            if ($user && password_verify($password, $user['password'])) {
+            if ($user && password_verify($password, $user['mot_de_passe_client'])) {
                 $entity = new UserEntity();
                 $entity->setName($user['nom_client']);
                 $entity->setPrenom($user['prenom_client']);
@@ -116,8 +116,8 @@ class DaoController implements DaoInterface
                 $entity->setPassword($user['mot_de_passe_client']);
                 $entity->setId($user['id_client']);
 
-                session_start();
                 $_SESSION['user'] = $entity;
+                return true;
             }
             
 
