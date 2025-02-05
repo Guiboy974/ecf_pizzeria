@@ -23,6 +23,7 @@ class LoginController implements ControllerInterface {
      * @return void
      */
     public function doPost() { 
+        session_start();
 
         //FIXME correction et controle login
         $email = $_POST['email'];
@@ -32,7 +33,6 @@ class LoginController implements ControllerInterface {
         $userEntity = $daoController->login($email, $password);
     
         if ($userEntity) {
-            session_start();
             $_SESSION['username'] = $_SESSION['user']->getPrenom();
             require 'template/home.php';
         } else {

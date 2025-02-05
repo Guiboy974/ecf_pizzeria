@@ -9,25 +9,28 @@ import { containerPizza, commandePizza } from "./app.js"
 
 async function getClientData() {
     try {
-        const response = await fetch('http://localhost/ECF/src/controller/ClientController.php', {
-            method: 'GET',
-            headers: {
+        const response = await fetch('http://localhost/ECF/src/index.php?action=client', {
+            method: "GET",
+            headers : {  
+                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         });
+
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
         const userData = await response.json();
         return userData
+
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
     }
 }
 // Appeler la fonction pour récupérer les données de l'utilisateur
-
-const dataClient = await getClientData();
-console.log(dataClient);
+getClientData().then(dataClient => {
+    console.log(dataClient);
+});
 
 
 

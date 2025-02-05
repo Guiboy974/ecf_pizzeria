@@ -16,6 +16,8 @@ use App\controller\LoginController;
 use App\controller\LogoutController;
 use App\controller\RegisterController;
 use App\controller\PizzaController;
+use App\controller\ClientController;
+use App\controller\CommandeController;
 
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -37,6 +39,11 @@ switch ($action) {
     case 'pizzas':
         $controller = new PizzaController();
         break;
+    case 'client':
+        $controller = new ClientController();
+        break;
+    case 'commande':
+        $controller = new CommandeController();    
     default:
         # code...
         break;
