@@ -8,15 +8,13 @@ class LogoutController implements ControllerInterface {
 
     
         public function __construct(){}
-
-        public function doPost(){}
-
         /**
-         * Déconnecte l'utilisateur
-         * @return void
+         * 
          */
-        public function doGet(){
-            session_start();
+        public function doPost(){
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
             $_SESSION = array();
             if (ini_get("session.use_cookies")) {
                 $params = session_get_cookie_params();
@@ -26,7 +24,11 @@ class LogoutController implements ControllerInterface {
                 );
             }
             session_destroy();
-            header('refresh:1;url=index.php');
             echo '<h2>Vous êtes déconnecté</h2>';
+            header('refresh:1;url=index.php');
+        }
+
+        public function doGet(){
+           
         }  
     }

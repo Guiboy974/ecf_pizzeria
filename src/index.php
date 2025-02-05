@@ -2,6 +2,10 @@
 
 namespace App;
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
@@ -43,10 +47,13 @@ switch ($action) {
         $controller = new ClientController();
         break;
     case 'commande':
-        $controller = new CommandeController();    
+        $controller = new CommandeController();  
+        break;  
     default:
-        # code...
-        break;
+           // Gérer les actions par défaut
+           http_response_code(404);
+           echo "Action non trouvée";
+           exit;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

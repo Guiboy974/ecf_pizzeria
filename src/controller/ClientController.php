@@ -8,7 +8,9 @@ class ClientController implements ControllerInterface
 
     public function doGet()
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         if (isset($_SESSION['user'])) {
             $user = $_SESSION['user'];
             header('Content-Type: application/json');

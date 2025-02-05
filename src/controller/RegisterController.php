@@ -48,7 +48,9 @@ class RegisterController implements ControllerInterface
         $createUser->create($user);
 
         if ($createUser->create($user)) {
-            session_start();
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
             $_SESSION['prenom'] = $prenom;
             require 'template/home.php';
         } else {
