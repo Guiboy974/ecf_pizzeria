@@ -45,10 +45,9 @@ class DaoController implements DaoInterface
                         ':password' => $user->getPassword()
                     ]
                 );
-                $id = $db->lastInsertId();
-                $user->setId($id);
+                // $id = $db->lastInsertId();
+                // $user->setId($id);
                 return true;
-          
 
         } catch (PDOException $exc) {
             exit($exc->getMessage());

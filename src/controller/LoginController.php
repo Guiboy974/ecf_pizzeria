@@ -13,7 +13,6 @@ class LoginController implements ControllerInterface {
     }
 
     public function doGet() {
-        session_start();
         require_once 'template/login.php';
     }
     

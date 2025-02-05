@@ -3,7 +3,10 @@ export async function recuperePizza() {
     const url = 'http://localhost/ECF/src/index.php?action=pizzas';
     const options = {
         method: "POST",
-        headers: { "Content-Type": "application/json" }
+        headers: { 
+            "Content-Type": "application/json",
+            "Accept" : "application/json"
+         }
     }
 
     try {
