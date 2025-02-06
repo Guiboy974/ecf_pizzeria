@@ -4,7 +4,6 @@ export let infoClient = [];
 
 import { containerPizza, commandePizza } from "./app.js"
 
-//TODO : ajouter les informations de la commande dans le fichier json pizza + client
 //TODO : ajoute date et heure de la commande
 
 async function getClientData() {
@@ -29,7 +28,7 @@ async function getClientData() {
 }
 // Appeler la fonction pour récupérer les données de l'utilisateur
 const dataClient = await getClientData();
-    console.log(dataClient);
+    // console.log(dataClient);
 
 
 // affiche le formulaire de commande final
@@ -174,7 +173,7 @@ export function controleForm(event) {
         containerPizza.appendChild(divAlert);
 
         const regexText = new RegExp(/[a-zA-Z]{3,}/g);
-        const regexTel = new RegExp(/[0-9]{10,}/g);
+        const regexTel = new RegExp(/[0-9]{9,}/g);
         const regexAdresse = new RegExp("^\\d+\\s+[a-zA-ZÀ-ÿ\\s-]+\\s+\\d{5}\\s+[a-zA-ZÀ-ÿ\\s-]+$");
 
         if (regexText.test(inputNom.value)) {
@@ -195,26 +194,26 @@ export function controleForm(event) {
                             recuperation: "Livraison"
                         })
 
-                        console.log(infoClient);
-                        inputVille.classList.remove("is-invalid");
+                        // console.log(infoClient);
 
                     } else {
                         inputAdresse.value = "";
                         inputAdresse.classList.add("is-invalid");
                     }
 
-                } else if (radioEmporte.checked === false) {
+                } else if (radioEmporte.checked === true) {
+                    
+                    // ajoute des nom et numéro a la commande uniquement si a emporté
+                    infoClient.push({
+                        id_client : dataClient.id,
+                        client: inputNom.value,
+                        telephone: inputPhone.value,
+                        recuperation: "Emporté"
+                    })
+                } else {
                     divAlert.innerHTML = `<div class="alert alert-danger m-2" role="alert">*option de récupération non sélectionner</div>`;
                     containerPizza.appendChild(divAlert);
                 }
-
-                // ajoute des nom et numéro a la commande uniquement si a emporté
-                infoClient.push({
-                    id_client : dataClient.id,
-                    client: inputNom.value,
-                    telephone: inputPhone.value,
-                    recuperation: "Emporté"
-                })
 
             } else {
                 inputPhone.value = "";

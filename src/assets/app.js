@@ -18,9 +18,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 import { recuperePizza } from "./recuperePizza.js";
 import { afficheForm, controleForm, infoClient } from "./form.js"
+import { envoyerCommande } from "./envoyerCommande.js";
+
 
 const pizzas = await recuperePizza();
-console.log(pizzas);
+// console.log(pizzas);
 
 
 const ulPizza = document.getElementById("list-pizza");
@@ -160,11 +162,10 @@ function addCommande(event) {
     if (event.target.tagName === "BUTTON") {
         for (let i = 0; i < pizzas.length; i++) {
             if (pizzas[i].nom_pizza == event.target.previousSibling.previousSibling.firstChild.textContent) {
-                console.log(event.target.previousSibling.previousSibling.firstChild.textContent);
 
                 const count = document.getElementsByClassName("count")[i];
                 let countPizza = parseInt(count.textContent);
-                let prixPizzas = pizzas[i].prix_pizza * countPizza;
+                let prixPizzas = parseFloat(pizzas[i].prix_pizza * countPizza);
                 nbPizza.classList.remove("d-none");
                 nbPizza.textContent = Number(nbPizza.textContent) + countPizza;
 
@@ -178,10 +179,11 @@ function addCommande(event) {
                 } else {
                     // Sinon, ajouter la pizza à la commande
                     commandePizza.push({
+                        id: pizzas[i].id_pizza,
                         nom: pizzas[i].nom_pizza,
                         prix: parseFloat(pizzas[i].prix_pizza),
                         nombre: countPizza,
-                        prixtotal: prixPizzas
+                        prixtotal: parseFloat(prixPizzas)
                     });
                     saveCommande();
                 }
@@ -224,7 +226,7 @@ function afficheCommande() {
         liPizza.appendChild(nomPizza);
         liPizza.appendChild(prixPizza);
         liPizza.appendChild(divSupp)
-        prixTotal = prixTotal + element.prixtotal;
+        prixTotal = parseFloat((prixTotal + element.prixtotal).toFixed(2));
     });
 
     const divPrix = document.createElement("div");
@@ -240,6 +242,8 @@ function afficheCommande() {
     containerPizza.appendChild(divPrix);
     divPrix.appendChild(pTotal);
     divPrix.appendChild(btnCommande);
+    console.log(commandePizza);
+    
 }
 
 //modifie la commande +/- jusqu'à supppression
@@ -289,28 +293,27 @@ function afficheValidation(event) {
         if (infoClient.length !== 0) {
             containerPizza.innerHTML = "";
             infoClient[0].commande = commandePizza
-            console.log(infoClient);
+            envoyerCommande();
 
-            const divCard = document.createElement("section");
-            const cardBody = document.createElement("div");
-            const cardTitle = document.createElement("h4");
-            const cardText = document.createElement("p");
+        //     console.log(infoClient);
 
-            divCard.classList.add("card", "w-75", "mx-auto", "border-success");
-            cardBody.classList.add("card-body", "text-success");
-            cardTitle.classList.add("card-title");
-            cardTitle.textContent = "Commande en cours de préparation";
-            cardText.classList.add("card-text");
-            cardText.innerHTML = `Votre commande a été validé.<br> 
-         Merci d'avoir commandé chez Casa Di Jo.`;
+        //     const divCard = document.createElement("section");
+        //     const cardBody = document.createElement("div");
+        //     const cardTitle = document.createElement("h4");
+        //     const cardText = document.createElement("p");
 
-            containerPizza.appendChild(divCard);
-            divCard.appendChild(cardBody);
-            cardBody.appendChild(cardTitle);
-            cardBody.appendChild(cardText);
+        //     divCard.classList.add("card", "w-75", "mx-auto", "border-success");
+        //     cardBody.classList.add("card-body", "text-success");
+        //     cardTitle.classList.add("card-title");
+        //     cardTitle.textContent = "Commande en cours de préparation";
+        //     cardText.classList.add("card-text");
+        //     cardText.innerHTML = `Votre commande a été validé.<br> 
+        //  Merci d'avoir commandé chez Casa Di Jo.`;
 
-            // Appeler la fonction pour supprimer le localStorage après validation de la commande
-            
+        //     containerPizza.appendChild(divCard);
+        //     divCard.appendChild(cardBody);
+        //     cardBody.appendChild(cardTitle);
+        //     cardBody.appendChild(cardText);  
         }
     }
 }

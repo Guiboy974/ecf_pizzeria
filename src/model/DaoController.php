@@ -23,15 +23,7 @@ class DaoController implements DaoInterface
         $user = $entity;
         try {
             $db = ConnectBDD::getInstance();
-
-            // FIXME Check if email already exists
-            // $checkQuery = $db->prepare("SELECT COUNT(*) FROM client WHERE email_client = :email");
-            // $checkQuery->execute([':email' => $user->getEmail()]);
-            // $emailExists = $checkQuery->fetchColumn();
-
-            // if ($emailExists) {
-            //     throw new \Exception("User email already exists.");
-            // } else {}
+ 
                 // insert nouvelle utilisateur
                 //TODO re check enregistrement
                 $query = $db->prepare("INSERT INTO client (nom_client, prenom_client, adresse_client, telephone_client, email_client, mot_de_passe_client) VALUES (:nom, :prenom, :adresse, :telephone, :email, :password)");
@@ -55,9 +47,18 @@ class DaoController implements DaoInterface
     }
 
 
-    public function readOne(int $id): EntityInterface
+    public function readOne($email)
     {
+        $db = ConnectBDD::getInstance();
+        try {
+            $checkQuery = $db->prepare("SELECT * FROM client WHERE email_client = :email");
+            $checkQuery->bindParam(':email' , $email);
+            $checkQuery->execute();
+            $checkQuery->fetch();
 
+        } catch (PDOException $exc) {
+            exit($exc->getMessage());
+        }
     }
 
     public function readAll(): array
@@ -82,7 +83,7 @@ class DaoController implements DaoInterface
         try {
             $db = ConnectBDD::getInstance();
             //TODO a verifié si besoin bindValue ou pas...
-            $stmt = $db->prepare("DELETE from Membres WHERE id_membre = :id");
+            $stmt = $db->prepare("DELETE from client WHERE id_client = :id");
             $stmt->execute();
             return true;
         } catch (PDOException $exc) {
@@ -130,7 +131,7 @@ class DaoController implements DaoInterface
         try {
             //TODO finir ajout image
             $db = ConnectBDD::getInstance();
-            $stmt = $db->query("SELECT pizza.nom_pizza, pizza.prix_pizza, base.nom_base, GROUP_CONCAT(ingredient.nom_ingredient SEPARATOR ', ') as ingredients 
+            $stmt = $db->query("SELECT pizza.id_pizza, pizza.nom_pizza, pizza.prix_pizza, base.nom_base, GROUP_CONCAT(ingredient.nom_ingredient SEPARATOR ', ') as ingredients 
                     FROM pizza
                     JOIN base ON base.id_base = pizza.id_base
                     JOIN compose ON compose.id_pizza = pizza.id_pizza
@@ -141,7 +142,37 @@ class DaoController implements DaoInterface
             exit($exc->getMessage());
         }
     }
+    // JOIN image ON image.id_pizza = pizza.id_pizza 
     
+    public function createCommande($data, $list){
+        try {
+            $db = ConnectBDD::getInstance();
+            $db->beginTransaction();
+
+            $date = date('Y-m-d H:i:s');
+
+            foreach ($list as $pizzas) {
+                $stmt = $db->prepare("INSERT INTO commande (id_pizza) VALUES (:id_pizza)");
+                $stmt->bindParam(':id_pizza' , $pizzas['id']);
+                $stmt->execute();
+            }
+
+            $stmt = $db->prepare(
+                "INSERT INTO commande (id_client, quantite_commande, date_commande, recuperation
+                 VALUES ( :id_client, :quantite_commande, :date_commande, :recuperation)");
+            $stmt->bindParam(':id_client', $data['id']);
+            $stmt->bindParam(':quantite_commande', $data['quantite']);
+            $stmt->bindParam(':date_commande', $date);
+            $stmt->bindParam(':recuperation', $data['recuperation']);
+            $stmt->execute();
+
+            $db->commit();
+
+        } catch (PDOException $exc) {
+            $db->rollBack();
+            exit("Erreur lors la lecture de la BDD : " .$exc);
+        }
+    }
+
 }
 
-// JOIN image ON image.id_pizza = pizza.id_pizza 

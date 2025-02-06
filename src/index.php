@@ -21,7 +21,7 @@ use App\controller\LogoutController;
 use App\controller\RegisterController;
 use App\controller\PizzaController;
 use App\controller\ClientController;
-// use App\controller\CommandeController;
+use App\controller\CommandeController;
 
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -46,11 +46,10 @@ switch ($action) {
     case 'client':
         $controller = new ClientController();
         break;
-    // case 'commande':
-    //     $controller = new CommandeController();  
-    //     break;  
+    case 'commande':
+        $controller = new CommandeController();  
+        break;  
     default:
-           // Gérer les actions par défaut
            http_response_code(404);
            echo "Action non trouvée";
            exit;

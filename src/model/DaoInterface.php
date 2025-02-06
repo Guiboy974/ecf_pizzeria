@@ -6,7 +6,7 @@ interface DaoInterface
 {
     public function create(EntityInterface $entity);
     
-    public function readOne(int $id): EntityInterface;
+    public function readOne($email);
     
     public function readAll(): array;
     

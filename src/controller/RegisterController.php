@@ -36,25 +36,33 @@ class RegisterController implements ControllerInterface
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        $user = new UserEntity();
-        $user->setName($username);
-        $user->setPrenom($prenom);
-        $user->setAdresse($adresse);
-        $user->setTelephone($telephone);
-        $user->setEmail($email);
-        $user->setPassword($password);
+        // $emailExist = new DaoController;
+        // $emailExist->readOne($email);
 
-        $createUser = new DaoController();
-        $createUser->create($user);
-
-        if ($createUser->create($user)) {
-            if (session_status() == PHP_SESSION_NONE) {
-                session_start();
+        // if (!$emailExist) {
+            $user = new UserEntity();
+            $user->setName($username);
+            $user->setPrenom($prenom);
+            $user->setAdresse($adresse);
+            $user->setTelephone($telephone);
+            $user->setEmail($email);
+            $user->setPassword($password);
+    
+            $createUser = new DaoController();
+            $createUser->create($user);
+    
+            if ($createUser->create($user)) {
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                }
+                $_SESSION['prenom'] = $prenom;
+                require 'template/home.php';
+            } else {
+                echo '<p>Echec de l\'inscription, veuillez rééssayer.</p>';
             }
-            $_SESSION['prenom'] = $prenom;
-            require 'template/home.php';
-        } else {
-            echo '<p>Echec de l\'inscription, veuillez rééssayer.</p>';
-        }
+        // } else {
+            echo 'email existant';
+        // }
+
     }
 }
