@@ -25,11 +25,16 @@ class CommandeController implements ControllerInterface
         $commandeList = $data['commande'];
         
         $dao = new DaoController;
-        $done = $dao->createCommande($data, $commandeList);
-
-        if ($done) {
-            echo 'ok' ;
+        try {
+            $dao->createCommande($data, $commandeList);
+            echo json_encode(['status' => 'success', 'message' => 'Commande créée avec succès']);
+        } catch (\Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Erreur lors de la création de la commande: ' . $e->getMessage()]);
         }
+
+        // if ($done) {
+        //     echo 'ok' ;
+        // }
         
 
     }
