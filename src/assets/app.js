@@ -26,12 +26,13 @@ console.log(pizzas);
 const ulPizza = document.getElementById("list-pizza");
 const filtre = document.getElementById("select-filtre");
 const commande = document.getElementById("commande");
-const divCommande = document.getElementById("divCommande");
 export const containerPizza = document.getElementById("main");
 export let commandePizza = [];
 let nbPizza = document.getElementsByClassName("nb-pizza")[0];
 if (nbPizza.textContent === "") {
     nbPizza.classList.add("d-none");
+} else {
+    nbPizza.classList.remove("d-none");
 }
 
 // Sauvegarde la commande dans le localStorage
@@ -55,7 +56,7 @@ function loadCommandeFromLocalStorage() {
 loadCommandeFromLocalStorage();
 
 // Supprime la commande du localStorage
-function clearLocalStorage() {
+export function clearLocalStorage() {
     localStorage.removeItem('commandePizza');
 }
 
@@ -198,12 +199,12 @@ function addCommande(event) {
 }
 
 // affiche commande en cours
-export function afficheCommande() {
-
-    divCommande.innerHTML = "";
+function afficheCommande() {
+    
+    containerPizza.innerHTML = "";
     const ulPizza = document.createElement("ul");
     ulPizza.classList.add("list-group", "list-group-flush", "mt-3", "rounded");
-    divCommande.appendChild(ulPizza);
+    containerPizza.appendChild(ulPizza);
     let prixTotal = 0;
     commandePizza.forEach(element => {
         const liPizza = document.createElement("li");
@@ -236,11 +237,10 @@ export function afficheCommande() {
     btnCommande.classList.add("btn", "btn-success", "my-1", "commande", "col-md-6", "mx-auto")
     btnCommande.textContent = "Commander";
 
-    divCommande.appendChild(divPrix);
+    containerPizza.appendChild(divPrix);
     divPrix.appendChild(pTotal);
     divPrix.appendChild(btnCommande);
 }
-afficheCommande();
 
 //modifie la commande +/- jusqu'à supppression
 function modifieCommande(event) {
@@ -310,7 +310,7 @@ function afficheValidation(event) {
             cardBody.appendChild(cardText);
 
             // Appeler la fonction pour supprimer le localStorage après validation de la commande
-            clearLocalStorage();
+            
         }
     }
 }
@@ -322,6 +322,6 @@ containerPizza.addEventListener("click", modifieCommande);
 containerPizza.addEventListener("click", afficheForm);
 containerPizza.addEventListener("click", controleForm);
 containerPizza.addEventListener("click", afficheValidation);
-// commande.addEventListener("click", afficheCommande);
+commande.addEventListener("click", afficheCommande);
 
 

@@ -28,14 +28,18 @@ async function getClientData() {
     }
 }
 // Appeler la fonction pour récupérer les données de l'utilisateur
-getClientData().then(dataClient => {
+const dataClient = await getClientData();
     console.log(dataClient);
-});
-
 
 
 // affiche le formulaire de commande final
-export function afficheForm(event) {
+export async function afficheForm(event) {
+    const userData = await getClientData();
+    if (!userData) {
+        window.location.href = 'http://localhost/ECF/src/index.php?action=login';
+        return;
+    }
+
     if (event.target.classList.contains("commande")) {
 
         //vérifie si la commande est vide avant chargement du formulaire
@@ -96,6 +100,7 @@ export function afficheForm(event) {
             inputNom.classList.add("form-control");
             inputNom.setAttribute("id", "inputNom");
             inputNom.setAttribute("type", "text");
+            inputNom.value = dataClient.name;
             divNom.appendChild(labelNom);
             divNom.appendChild(inputNom);
 
@@ -108,6 +113,7 @@ export function afficheForm(event) {
             inputPhone.classList.add("form-control");
             inputPhone.setAttribute("id", "inputPhone");
             inputPhone.setAttribute("type", "number");
+            inputPhone.value = dataClient.telephone;
             divPhone.appendChild(labelPhone);
             divPhone.appendChild(inputPhone);
 
@@ -120,7 +126,7 @@ export function afficheForm(event) {
             inputAdresse.classList.add("form-control");
             inputAdresse.setAttribute("id", "inputAdresse");
             inputAdresse.setAttribute("type", "text");
-            inputAdresse.setAttribute("placeholder", "12 rue de chez toi")
+            inputAdresse.value = dataClient.adresse;
             divAdresseP.appendChild(labelAdresse);
             divAdresseP.appendChild(inputAdresse);
 
@@ -128,6 +134,8 @@ export function afficheForm(event) {
             const btnPayer = document.createElement("button")
             btnPayer.textContent = "Payer";
             btnPayer.classList.add("btn", "btn-success", "payer")
+            btnPayer.setAttribute("method", "post")
+            btnPayer.setAttribute("action", "index.php?action=commande")
             btnPayer.setAttribute("type", "submit")
             divPayer.appendChild(btnPayer)
 
@@ -180,6 +188,7 @@ export function controleForm(event) {
 
                         //ajoute toute les informations de livraison
                         infoClient.push({
+                            id_client : dataClient.id,
                             client: inputNom.value,
                             telephone: inputPhone.value,
                             adresse: inputAdresse.value,
@@ -201,6 +210,7 @@ export function controleForm(event) {
 
                 // ajoute des nom et numéro a la commande uniquement si a emporté
                 infoClient.push({
+                    id_client : dataClient.id,
                     client: inputNom.value,
                     telephone: inputPhone.value,
                     recuperation: "Emporté"

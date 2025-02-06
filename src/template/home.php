@@ -1,5 +1,7 @@
 <?php
 
+use App\model\UserEntity;
+
 ob_start(); ?>
 
 <section class="container-fluid mt-3 text-center" id="main">

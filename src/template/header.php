@@ -24,7 +24,8 @@
             </div>
         </div>
         <div class="me-3">
-            <a class="link-dark text-decoration-none m-2" href="index.php?action=commande">
+            <a class="link-dark text-decoration-none m-2"> 
+            <!-- href="index.php?action=commande" -->
                 <i class="bi bi-cart4 p-1 position-relative" id="commande">
                     <span
                         class="position-absolute top-0 start-100 translate-middle p-1 bg-danger text-white border border-light rounded-circle nb-pizza"></span>

@@ -1,5 +1,5 @@
 import {infoClient} from './form.js';
-import {commandePizza} from './app.js';
+import {commandePizza, clearLocalStorage } from './app.js';
 
 const jsonClient = JSON.stringify(infoClient);
 const jsonPizza = JSON.stringify(commandePizza);
@@ -11,6 +11,7 @@ $.ajax( {
     cache : false,
 
     success: function(){
-        //TODO supprime le localStorage
+        //supprime le localStorage
+        clearLocalStorage();
     }
 })

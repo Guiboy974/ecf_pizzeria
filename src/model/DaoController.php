@@ -116,7 +116,7 @@ class DaoController implements DaoInterface
                 $entity->setId($user['id_client']);
 
                 $_SESSION['user'] = $entity;
-                return true;
+                return $entity;
             }
             
 
