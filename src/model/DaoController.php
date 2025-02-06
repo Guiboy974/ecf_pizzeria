@@ -23,23 +23,23 @@ class DaoController implements DaoInterface
         $user = $entity;
         try {
             $db = ConnectBDD::getInstance();
- 
-                // insert nouvelle utilisateur
-                //TODO re check enregistrement
-                $query = $db->prepare("INSERT INTO client (nom_client, prenom_client, adresse_client, telephone_client, email_client, mot_de_passe_client) VALUES (:nom, :prenom, :adresse, :telephone, :email, :password)");
-                $query->execute(
-                    [
-                        ':nom' => $user->getName(),
-                        ':prenom' => $user->getPrenom(),
-                        ':adresse' => $user->getAdresse(),
-                        ':telephone' => $user->getTelephone(),
-                        ':email' => $user->getEmail(),
-                        ':password' => $user->getPassword()
-                    ]
-                );
-                // $id = $db->lastInsertId();
-                // $user->setId($id);
-                return true;
+
+            // insert nouvelle utilisateur
+            //TODO re check enregistrement
+            $query = $db->prepare("INSERT INTO client (nom_client, prenom_client, adresse_client, telephone_client, email_client, mot_de_passe_client) VALUES (:nom, :prenom, :adresse, :telephone, :email, :password)");
+            $query->execute(
+                [
+                    ':nom' => $user->getName(),
+                    ':prenom' => $user->getPrenom(),
+                    ':adresse' => $user->getAdresse(),
+                    ':telephone' => $user->getTelephone(),
+                    ':email' => $user->getEmail(),
+                    ':password' => $user->getPassword()
+                ]
+            );
+            // $id = $db->lastInsertId();
+            // $user->setId($id);
+            return true;
 
         } catch (PDOException $exc) {
             exit($exc->getMessage());
@@ -52,7 +52,7 @@ class DaoController implements DaoInterface
         $db = ConnectBDD::getInstance();
         try {
             $checkQuery = $db->prepare("SELECT * FROM client WHERE email_client = :email");
-            $checkQuery->bindParam(':email' , $email);
+            $checkQuery->bindParam(':email', $email);
             $checkQuery->execute();
             $checkQuery->fetch();
 
@@ -119,7 +119,7 @@ class DaoController implements DaoInterface
                 $_SESSION['user'] = $entity;
                 return $entity;
             }
-            
+
 
         } catch (PDOException $exc) {
             exit($exc->getMessage());
@@ -143,8 +143,9 @@ class DaoController implements DaoInterface
         }
     }
     // JOIN image ON image.id_pizza = pizza.id_pizza 
-    
-    public function createCommande($data, $list){
+
+    public function createCommande($data, $list)
+    {
         try {
             $db = ConnectBDD::getInstance();
             $db->beginTransaction();
@@ -152,25 +153,20 @@ class DaoController implements DaoInterface
             $date = date('Y-m-d H:i:s');
 
             foreach ($list as $pizzas) {
-                $stmt = $db->prepare("INSERT INTO commande (id_pizza) VALUES (:id_pizza)");
-                $stmt->bindParam(':id_pizza' , $pizzas['id']);
+                $stmt = $db->prepare("INSERT INTO commande (id_pizza, id_client, quantite_commande, date_commande, recuperation) VALUES (:id_pizza, :id_client, :quantite_commande, :date_commande, :recuperation)");
+                $stmt->bindParam(':id_pizza', $pizzas['id']);
+                $stmt->bindParam(':id_client', $data['id_client']);
+                $stmt->bindParam(':quantite_commande', $data['quantite']);
+                $stmt->bindParam(':date_commande', $date);
+                $stmt->bindParam(':recuperation', $data['recuperation']);
                 $stmt->execute();
             }
-
-            $stmt = $db->prepare(
-                "INSERT INTO commande (id_client, quantite_commande, date_commande, recuperation
-                 VALUES ( :id_client, :quantite_commande, :date_commande, :recuperation)");
-            $stmt->bindParam(':id_client', $data['id']);
-            $stmt->bindParam(':quantite_commande', $data['quantite']);
-            $stmt->bindParam(':date_commande', $date);
-            $stmt->bindParam(':recuperation', $data['recuperation']);
-            $stmt->execute();
 
             $db->commit();
 
         } catch (PDOException $exc) {
             $db->rollBack();
-            exit("Erreur lors la lecture de la BDD : " .$exc);
+            exit("Erreur lors la lecture de la BDD : " . $exc);
         }
     }
 
