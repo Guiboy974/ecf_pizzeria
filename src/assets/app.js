@@ -290,7 +290,6 @@ function afficheValidation(event) {
         if (infoClient.length !== 0) {
             containerPizza.innerHTML = "";
             infoClient[0].commande = commandePizza
-            infoClient[0].quantite = parseInt(nbPizza.textContent)
             envoyerCommande();
 
         //     console.log(infoClient);

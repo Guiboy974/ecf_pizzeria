@@ -25,7 +25,7 @@ class CommandeController implements ControllerInterface
             exit;
         }
         
-        $requiredKeys = ['commande', 'client', 'telephone', 'id_client', 'quantite', 'recuperation'];
+        $requiredKeys = ['commande', 'client', 'telephone', 'id_client', 'recuperation'];
         foreach ($requiredKeys as $key) {
             if (!isset($data[$key])) {
                 echo json_encode(['status' => 'error', 'message' => "Clé(s) manquante(s): $key"]);
