@@ -153,6 +153,9 @@ class DaoController implements DaoInterface
             $date = date('Y-m-d H:i:s');
 
             foreach ($list as $pizzas) {
+                if (!isset($pizzas['id']) || !isset($data['id_client']) || !isset($data['quantite']) || !isset($data['recuperation'])) {
+                    throw new \Exception("Données manquantes pour l'insertion dans la base de données.");
+                }
                 $stmt = $db->prepare("INSERT INTO commande (id_pizza, id_client, quantite_commande, date_commande, recuperation) VALUES (:id_pizza, :id_client, :quantite_commande, :date_commande, :recuperation)");
                 $stmt->bindParam(':id_pizza', $pizzas['id']);
                 $stmt->bindParam(':id_client', $data['id_client']);

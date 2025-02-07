@@ -11,25 +11,26 @@ class CommandeController implements ControllerInterface
     }
     public function doPost()
     {
+        header( 'Content-Type : application/json');
         $request_json = file_get_contents('php://input', true);
         $data = json_decode($request_json, true);
         
         if (!is_array($data)) {
             echo json_encode(['status' => 'error', 'message' => 'Invalid data format']);
-            return;
+            exit;
         }
         
         $requiredKeys = ['commande', 'client', 'telephone', 'id_client', 'quantite', 'recuperation'];
         foreach ($requiredKeys as $key) {
             if (!isset($data[$key])) {
-                echo json_encode(['status' => 'error', 'message' => "Missing required key: $key"]);
-                return;
+                echo json_encode(['status' => 'error', 'message' => "Clé(s) manquante(s): $key"]);
+                exit;
             }
         }
         
         if (!is_array($data['commande'])) {
-            echo json_encode(['status' => 'error', 'message' => "'commande' must be an array"]);
-            return;
+            echo json_encode(['status' => 'error', 'message' => "'commande' doit être une tableau"]);
+            exit;
         }
         
         $commandeList = $data['commande'];
@@ -38,17 +39,19 @@ class CommandeController implements ControllerInterface
         try {
             $dao->createCommande($data, $commandeList);
             echo json_encode(['status' => 'success', 'message' => 'Commande créée avec succès']);
+            $done = true;
+            include "template/commandeValider.php";
+            exit;
         } catch (\PDOException $e) {
             // Capture les exceptions PDO et renvoie une réponse JSON
             echo json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage()]);
+            exit;
         } catch (\Exception $e) {
             echo json_encode(['status' => 'error', 'message' => 'Erreur lors de la création de la commande: ' . $e->getMessage()]);
+            exit;
         }
 
-        // if ($done) {
-        //     echo 'ok' ;
-        // }
-        
+       
 
     }
     public function doGet()

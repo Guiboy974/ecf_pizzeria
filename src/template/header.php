@@ -1,5 +1,5 @@
 <header>
-    <picture><img class="img-fluid mx-auto d-block" src="../images/emotionheader.jpg"
+    <picture><img class="img-fluid mx-auto d-block" src="./images/emotionheader.jpg"
             alt="logo casa di jo, pizza aux feux de bois">
     </picture>
     <nav class="navbar navbar-expand-lg bg-success-subtle d-flex justify-content-center fw-medium">

@@ -253,7 +253,7 @@ function modifieCommande(event) {
         for (let i = 0; i < commandePizza.length; i++) {
             if (commandePizza[i].nom == event.target.parentElement.parentElement.parentElement.firstChild.textContent) {
                 commandePizza[i].nombre++;
-                commandePizza[i].prixtotal += parseFloat(commandePizza[i].prix);
+                commandePizza[i].prixtotal += commandePizza[i].prix;
                 nbPizza.textContent++;
 
                 afficheCommande()
@@ -298,23 +298,6 @@ function afficheValidation(event) {
 
         //     console.log(infoClient);
 
-        //     const divCard = document.createElement("section");
-        //     const cardBody = document.createElement("div");
-        //     const cardTitle = document.createElement("h4");
-        //     const cardText = document.createElement("p");
-
-        //     divCard.classList.add("card", "w-75", "mx-auto", "border-success");
-        //     cardBody.classList.add("card-body", "text-success");
-        //     cardTitle.classList.add("card-title");
-        //     cardTitle.textContent = "Commande en cours de préparation";
-        //     cardText.classList.add("card-text");
-        //     cardText.innerHTML = `Votre commande a été validé.<br> 
-        //  Merci d'avoir commandé chez Casa Di Jo.`;
-
-        //     containerPizza.appendChild(divCard);
-        //     divCard.appendChild(cardBody);
-        //     cardBody.appendChild(cardTitle);
-        //     cardBody.appendChild(cardText);  
         }
     }
 }
