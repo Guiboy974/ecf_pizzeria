@@ -43,8 +43,7 @@ class CommandeController implements ControllerInterface
         $dao = new DaoController();
         try {
             $dao->createCommande($data, $commandeList);
-            $done = true;
-            include "template/commandeValider.php";
+            // include "template/commandeValider.php";
             exit;
         } catch (\PDOException $e) {
             // Capture les exceptions PDO et renvoie une réponse JSON
