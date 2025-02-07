@@ -12,16 +12,18 @@ class HomeController implements ControllerInterface
    
     }
 
+    /**
+     * Summary of doGet
+     * @return void
+     */
     public function doGet()
     {
-        //TODO Ajouter le code pour afficher la page d'accueil
         require_once 'template/home.php';
         
     }
     
     public function doPost()
     {
-        //TODO Ajouter le code pour traiter le formulaire de la page d'accueil
     }
 
 }

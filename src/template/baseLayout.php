@@ -19,6 +19,7 @@
     <title>Casa Di Jo Pizzeria</title>
 </head>
 
+<!-- modele de base ou s'implémente les différentes vue -->
 <body class="bg-dark text-white mx-auto">
     <?php include 'header.php'; ?>
 

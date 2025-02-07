@@ -1,8 +1,7 @@
 import { infoClient } from './form.js';
 import { clearLocalStorage } from './app.js';
 
-// const jsonClient = JSON.stringify(infoClient);
-
+// Fonction pour envoyer la commande au serveur
 export function envoyerCommande() {
     const url = 'http://localhost/ECF/src/index.php?action=commande';
     const options = {
@@ -10,11 +9,11 @@ export function envoyerCommande() {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(infoClient[0]),
+        body: JSON.stringify(infoClient[0]), // Convertit le premier élément de infoClient en JSON
         cache: "no-cache"
     }
 
-    console.log('infoClient:', infoClient);
+    console.log('infoClient:', infoClient); // Affiche infoClient dans la console
 
     fetch(url, options)
     .then(response => {
@@ -26,7 +25,7 @@ export function envoyerCommande() {
     .then(text => {
         console.log('Raw response:', text); // Affiche la réponse brute
         try {
-            const data = JSON.parse(text); // Parser la réponse brute en JSON
+            const data = JSON.parse(text); // Parse la réponse brute en JSON
             if (data.status !== 'success') {
                 throw new Error('Server error: ' + data.message);
             }

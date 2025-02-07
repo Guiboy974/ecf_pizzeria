@@ -4,8 +4,7 @@ export let infoClient = [];
 
 import { containerPizza, commandePizza } from "./app.js"
 
-//TODO : ajoute date et heure de la commande
-
+// Fonction pour récupérer les données du client
 async function getClientData() {
     try {
         const response = await fetch('http://localhost/ECF/src/index.php?action=client', {
@@ -28,10 +27,9 @@ async function getClientData() {
 }
 // Appeler la fonction pour récupérer les données de l'utilisateur
 const dataClient = await getClientData();
-    // console.log(dataClient);
+// console.log(dataClient);
 
-
-// affiche le formulaire de commande final
+// Fonction pour afficher le formulaire de commande final
 export async function afficheForm(event) {
     const userData = await getClientData();
     if (!userData) {
@@ -41,7 +39,7 @@ export async function afficheForm(event) {
 
     if (event.target.classList.contains("commande")) {
 
-        //vérifie si la commande est vide avant chargement du formulaire
+        // Vérifie si la commande est vide avant chargement du formulaire
         if (commandePizza.length === 0) {
             const divAlert = document.createElement("div");
             divAlert.innerHTML = "";
@@ -57,7 +55,7 @@ export async function afficheForm(event) {
             containerPizza.appendChild(titreForm);
             containerPizza.appendChild(form);
 
-            //creation des différentes div
+            // Création des différentes div
             const fielsetRadio = document.createElement("fieldset");
             const divRadioL = document.createElement("div");
             const divRadioE = document.createElement("div");
@@ -90,7 +88,7 @@ export async function afficheForm(event) {
             fielsetInput.appendChild(divAdresseP);
             fielsetInput.appendChild(divPayer);
 
-            //input nom
+            // Input nom
             const labelNom = document.createElement("label");
             const inputNom = document.createElement("input");
             labelNom.textContent = "Nom";
@@ -103,7 +101,7 @@ export async function afficheForm(event) {
             divNom.appendChild(labelNom);
             divNom.appendChild(inputNom);
 
-            //input téléphone
+            // Input téléphone
             const labelPhone = document.createElement("label");
             const inputPhone = document.createElement("input");
             labelPhone.textContent = "Téléphone";
@@ -116,7 +114,7 @@ export async function afficheForm(event) {
             divPhone.appendChild(labelPhone);
             divPhone.appendChild(inputPhone);
 
-            //input adresse principal
+            // Input adresse principal
             const labelAdresse = document.createElement("label");
             const inputAdresse = document.createElement("input");
             labelAdresse.textContent = "Adresse";
@@ -129,7 +127,7 @@ export async function afficheForm(event) {
             divAdresseP.appendChild(labelAdresse);
             divAdresseP.appendChild(inputAdresse);
 
-            //bouton Payer
+            // Bouton Payer
             const btnPayer = document.createElement("button")
             btnPayer.textContent = "Payer";
             btnPayer.classList.add("btn", "btn-success", "payer")
@@ -138,7 +136,7 @@ export async function afficheForm(event) {
             btnPayer.setAttribute("type", "submit")
             divPayer.appendChild(btnPayer)
 
-            // desactive une partie dur formulaire
+            // Désactive une partie du formulaire
             const radioEmporte = document.getElementById("emporte");
             const radioLivraison = document.getElementById("livraison");
             fielsetRadio.addEventListener("click", () => {
@@ -156,7 +154,7 @@ export async function afficheForm(event) {
 
 }
 
-//controle le formulaire avant envoie
+// Fonction pour contrôler le formulaire avant envoi
 export function controleForm(event) {
     const radioLivraison = document.getElementById("livraison");
     const radioEmporte = document.getElementById("emporte");
@@ -185,7 +183,7 @@ export function controleForm(event) {
                     if (regexAdresse.test(inputAdresse.value)) {
                         inputAdresse.classList.remove("is-invalid");
 
-                        //ajoute toute les informations de livraison
+                        // Ajoute toutes les informations de livraison
                         infoClient.push({
                             id_client : dataClient.id,
                             client: inputNom.value,
@@ -203,7 +201,7 @@ export function controleForm(event) {
 
                 } else if (radioEmporte.checked === true) {
                     
-                    // ajoute des nom et numéro a la commande uniquement si a emporté
+                    // Ajoute des nom et numéro à la commande uniquement si à emporter
                     infoClient.push({
                         id_client : dataClient.id,
                         client: inputNom.value,
@@ -226,4 +224,3 @@ export function controleForm(event) {
 
     }
 }
-

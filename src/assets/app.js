@@ -20,10 +20,8 @@ import { recuperePizza } from "./recuperePizza.js";
 import { afficheForm, controleForm, infoClient } from "./form.js"
 import { envoyerCommande } from "./envoyerCommande.js";
 
-
 const pizzas = await recuperePizza();
 // console.log(pizzas);
-
 
 const ulPizza = document.getElementById("list-pizza");
 const filtre = document.getElementById("select-filtre");
@@ -62,11 +60,10 @@ export function clearLocalStorage() {
     localStorage.removeItem('commandePizza');
 }
 
-
-//affichage initiale des pizza
+// Affichage initiale des pizzas
 pizzas.forEach(pizzas => displayPizza(pizzas));
 
-// filtre les pizzas
+// Filtre les pizzas
 function filtrerPizza(event) {
     const optionValue = event.target.value;
     const pizzasFiltrees = pizzas.filter(pizzas => {
@@ -82,13 +79,13 @@ function filtrerPizza(event) {
     displayPizzas(pizzasFiltrees);
 }
 
-// affiche les pizzas
+// Affiche les pizzas
 function displayPizzas(pizzas) {
     ulPizza.innerHTML = "";
     pizzas.forEach(pizza => displayPizza(pizza));
 }
 
-// creer li d'une pizza
+// Créer li d'une pizza
 function displayPizza(data) {
     const liPizza = document.createElement("li");
     const imgPizza = document.createElement("img");
@@ -143,7 +140,7 @@ function displayPizza(data) {
     }, 0);
 }
 
-// ajoute ou retire le nombre de pizzas voulu
+// Ajoute ou retire le nombre de pizzas voulu
 function addPizza(event) {
     if (event.target.classList.contains("bi-plus-circle")) {
         event.target.previousSibling.textContent++;
@@ -157,7 +154,7 @@ function addPizza(event) {
     }
 }
 
-// ajoute a la commande
+// Ajoute à la commande
 function addCommande(event) {
     if (event.target.tagName === "BUTTON") {
         for (let i = 0; i < pizzas.length; i++) {
@@ -200,7 +197,7 @@ function addCommande(event) {
     }
 }
 
-// affiche commande en cours
+// Affiche commande en cours
 function afficheCommande() {
     
     containerPizza.innerHTML = "";
@@ -246,7 +243,7 @@ function afficheCommande() {
     
 }
 
-//modifie la commande +/- jusqu'à supppression
+// Modifie la commande +/- jusqu'à suppression
 function modifieCommande(event) {
 
     if (event.target.classList.contains("plus")) {
@@ -287,7 +284,7 @@ function modifieCommande(event) {
     saveCommande();
 }
 
-//affiche validation de commande 
+// Affiche validation de commande 
 function afficheValidation(event) {
     if (event.target.classList.contains("payer")) {
         if (infoClient.length !== 0) {
@@ -310,5 +307,3 @@ containerPizza.addEventListener("click", afficheForm);
 containerPizza.addEventListener("click", controleForm);
 containerPizza.addEventListener("click", afficheValidation);
 commande.addEventListener("click", afficheCommande);
-
-

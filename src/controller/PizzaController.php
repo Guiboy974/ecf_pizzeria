@@ -23,6 +23,11 @@ class PizzaController implements ControllerInterface
 
     }
 
+    /**
+     * récupère la méthod POST envoyer par le fetch
+     * pour récupérer les pizzaset les affiché
+     * @return void
+     */
     public function doPost()
     {
         $this->dao = new PizzaModel();

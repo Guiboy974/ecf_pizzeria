@@ -9,6 +9,11 @@ class CommandeController implements ControllerInterface
     public function __construct()
     {
     }
+
+    /**
+     * Summary of doPost
+     * @return never
+     */ 
     public function doPost()
     {
         header( 'Content-Type : application/json');
@@ -54,6 +59,11 @@ class CommandeController implements ControllerInterface
        
 
     }
+
+    /**
+     * Summary of doGet
+     * @return void
+     */
     public function doGet()
     {
         require_once "template/commande.php";

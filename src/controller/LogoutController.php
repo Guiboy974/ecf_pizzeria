@@ -8,8 +8,11 @@ class LogoutController implements ControllerInterface {
 
     
         public function __construct(){}
+        
         /**
-         * 
+         * Summary of doPost
+         * gère la déconnexion
+         * @return void
          */
         public function doPost(){
             if (session_status() == PHP_SESSION_NONE) {

@@ -2,6 +2,35 @@
 
 namespace App;
 
+/**
+ * Fichier principal de l'application.
+ * 
+ * Ce fichier initialise l'environnement, démarre la session si nécessaire,
+ * configure les en-têtes CORS et dirige les requêtes vers les contrôleurs appropriés
+ * en fonction de l'action spécifiée dans l'URL.
+ * 
+ * @package App
+ * 
+ * Dépendances :
+ * - Dotenv pour la gestion des variables d'environnement
+ * - Contrôleurs pour gérer les différentes actions de l'application
+ * 
+ * Actions disponibles :
+ * - home : Affiche la page d'accueil
+ * - register : Affiche la page d'inscription
+ * - login : Affiche la page de connexion
+ * - logout : Gère la déconnexion de l'utilisateur
+ * - pizzas : Affiche la liste des pizzas
+ * - client : Gère les actions liées aux clients
+ * - commande : Gère les actions liées aux commandes
+ * 
+ * Méthodes HTTP supportées :
+ * - GET : Appelle la méthode doGET() du contrôleur
+ * - POST : Appelle la méthode doPOST() du contrôleur
+ * 
+ * En cas d'action non trouvée, une réponse 404 est renvoyée.
+ */
+
 require('../vendor/autoload.php');
 
 $dotenv = \Dotenv\Dotenv::createImmutable("../");
@@ -11,9 +40,9 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// header("Access-Control-Allow-Origin: *");
-// header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-// header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 use App\controller\HomeController;
 use App\controller\LoginController;

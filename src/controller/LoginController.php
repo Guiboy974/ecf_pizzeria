@@ -14,6 +14,10 @@ class LoginController implements ControllerInterface {
         // $this->users = new UserController();
     }
 
+    /**
+     * Summary of doGet
+     * @return void
+     */
     public function doGet() {
 
             require_once 'template/login.php';
@@ -26,7 +30,6 @@ class LoginController implements ControllerInterface {
      */
     public function doPost() { 
 
-        //FIXME correction et controle login
         $this->email = $_POST['email'];
         $this->password = $_POST['password'];
     

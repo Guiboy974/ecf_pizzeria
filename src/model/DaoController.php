@@ -8,7 +8,6 @@ use App\model\DaoInterface;
 use App\ConnectBDD;
 use App\model\UserEntity;
 
-//FIXME changer le nom de la table par users
 class DaoController implements DaoInterface
 {
 
@@ -25,7 +24,6 @@ class DaoController implements DaoInterface
             $db = ConnectBDD::getInstance();
 
             // insert nouvelle utilisateur
-            //TODO re check enregistrement
             $query = $db->prepare("INSERT INTO client (nom_client, prenom_client, adresse_client, telephone_client, email_client, mot_de_passe_client) VALUES (:nom, :prenom, :adresse, :telephone, :email, :password)");
             $query->execute(
                 [
@@ -46,7 +44,11 @@ class DaoController implements DaoInterface
         }
     }
 
-
+    /**
+     * lit dans la bdd pour un seul client
+     * @param mixed $email
+     * @return void
+     */
     public function readOne($email)
     {
         $db = ConnectBDD::getInstance();
@@ -61,23 +63,39 @@ class DaoController implements DaoInterface
         }
     }
 
+    /**
+     * non utiliser dans cette app
+     * @return array
+     */
     public function readAll(): array
     {
         try {
             $db = ConnectBDD::getInstance();
-            $stmt = $db->query("SELECT * from utilisateurs");
+            $stmt = $db->query("SELECT * from client");
             return $stmt->fetchAll();
         } catch (PDOException $exc) {
             exit($exc->getMessage());
         }
     }
 
+    /**
+     * Summary of update
+     * non utiliser dans cette app
+     * @param \App\model\EntityInterface $entity
+     * @return bool
+     */
     public function update(EntityInterface $entity): bool
     {
         //TODO Ajouter le code pour mettre à jour un utilisateur
         return true; // or return false based on your logic
     }
 
+    /**
+     * Summary of delete
+     * non utiliser dans cette app
+     * @param \App\model\EntityInterface $entity
+     * @return bool
+     */
     public function delete(EntityInterface $entity): bool
     {
         try {
@@ -126,6 +144,10 @@ class DaoController implements DaoInterface
         }
     }
 
+    /**
+     * lit les pizzas en bdd
+     * @return array
+     */
     public function readAllPizzas(): array
     {
         try {
@@ -144,6 +166,13 @@ class DaoController implements DaoInterface
     }
     // JOIN image ON image.id_pizza = pizza.id_pizza 
 
+    /**
+     * ajoute une commande au dépot
+     * @param mixed $data
+     * @param mixed $list
+     * @throws \Exception
+     * @return void
+     */
     public function createCommande($data, $list)
     {
         try {

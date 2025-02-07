@@ -2,6 +2,7 @@
 
 ob_start(); ?>
 
+<!-- affiche validation de commande -->
 <?php if($done) : ?>
 <section class="card w-75 mx-auto border-success">
     <div class="card-body text-success">
