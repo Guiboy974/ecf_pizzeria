@@ -181,6 +181,8 @@ class DaoController implements DaoInterface
 
             $date = date('Y-m-d H:i:s');
 
+            //FIXME pb integrité, impossibilité d'entrer plusieur clé primaire identique (id_client, id_pizza), pourtant nécessaire un client peut commander plusieur pizza identique
+            //TODO modifier donnée entrer ou bdd pour avec une id_commande? pour pouvoir faire les INSERT
             foreach ($list as $pizzas) {
                 if (!isset($pizzas['id']) || !isset($data['id_client']) || !isset($data['quantite']) || !isset($data['recuperation'])) {
                     throw new \Exception("Données manquantes pour l'insertion dans la base de données.");

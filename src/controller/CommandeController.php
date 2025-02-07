@@ -16,7 +16,7 @@ class CommandeController implements ControllerInterface
      */ 
     public function doPost()
     {
-        header( 'Content-Type : application/json');
+        header( 'Content-Type: application/json');
         $request_json = file_get_contents('php://input', true);
         $data = json_decode($request_json, true);
         
@@ -43,7 +43,6 @@ class CommandeController implements ControllerInterface
         $dao = new DaoController();
         try {
             $dao->createCommande($data, $commandeList);
-            echo json_encode(['status' => 'success', 'message' => 'Commande créée avec succès']);
             $done = true;
             include "template/commandeValider.php";
             exit;
@@ -55,8 +54,6 @@ class CommandeController implements ControllerInterface
             echo json_encode(['status' => 'error', 'message' => 'Erreur lors de la création de la commande: ' . $e->getMessage()]);
             exit;
         }
-
-       
 
     }
 
