@@ -13,7 +13,7 @@ ob_start();
         <p>Téléphone: <?php echo htmlspecialchars($user->getTelephone()); ?></p>
         <p>Email: <?php echo htmlspecialchars($user->getEmail()); ?></p>
     
-        <form action="index.php?action=logout">
+        <form action="index.php?action=logout" method="post">
     
             <button class="btn btn-success" type="submit">se déconnecter</button>
         </form>
