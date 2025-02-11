@@ -3,7 +3,7 @@ import { clearLocalStorage } from './app.js';
 
 // Fonction pour envoyer la commande au serveur
 export function envoyerCommande() {
-    const url = 'http://localhost/ECF/src/index.php?action=commande';
+    const url = 'index.php?action=commande';
     const options = {
         method: "POST",
         headers: {

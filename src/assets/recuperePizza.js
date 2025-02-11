@@ -1,6 +1,6 @@
 // recupère et utilise les données json des pizzas
 export async function recuperePizza() {
-    const url = 'http://localhost/ECF/src/index.php?action=pizzas';
+    const url = 'index.php?action=pizzas';
     const options = {
         method: "POST",
         headers: { 
