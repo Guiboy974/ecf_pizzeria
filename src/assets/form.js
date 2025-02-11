@@ -33,7 +33,7 @@ const dataClient = await getClientData();
 export async function afficheForm(event) {
     const userData = await getClientData();
     if (!userData) {
-        window.location.href = 'http://localhost/ECF/src/index.php?action=login';
+        window.location.href = 'index.php?action=login';
         return;
     }
 
